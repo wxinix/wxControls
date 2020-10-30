@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{164AB00E-993A-46B2-9519-5B76EDE39E45}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="wxObjectInspectorR.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="wxObjectInspectorD.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\Demo\InspDemo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="wxObjectInspectorR">
+        <MSBuild Projects="wxObjectInspectorR.dproj"/>
+    </Target>
+    <Target Name="wxObjectInspectorR:Clean">
+        <MSBuild Projects="wxObjectInspectorR.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="wxObjectInspectorR:Make">
+        <MSBuild Projects="wxObjectInspectorR.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="wxObjectInspectorD">
+        <MSBuild Projects="wxObjectInspectorD.dproj"/>
+    </Target>
+    <Target Name="wxObjectInspectorD:Clean">
+        <MSBuild Projects="wxObjectInspectorD.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="wxObjectInspectorD:Make">
+        <MSBuild Projects="wxObjectInspectorD.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="InspDemo">
+        <MSBuild Projects="..\Demo\InspDemo.dproj"/>
+    </Target>
+    <Target Name="InspDemo:Clean">
+        <MSBuild Projects="..\Demo\InspDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="InspDemo:Make">
+        <MSBuild Projects="..\Demo\InspDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="wxObjectInspectorR;wxObjectInspectorD;InspDemo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="wxObjectInspectorR:Clean;wxObjectInspectorD:Clean;InspDemo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="wxObjectInspectorR:Make;wxObjectInspectorD:Make;InspDemo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

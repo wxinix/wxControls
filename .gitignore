@@ -1,0 +1,14 @@
+__history
+*.dcu
+*.dsk
+*.skincfg
+*.stat
+*.identcache
+*.local
+*.tvsconfig
+*.bak
+*.~*
+Win32/
+Win64/
+*.vlb
+*.res
