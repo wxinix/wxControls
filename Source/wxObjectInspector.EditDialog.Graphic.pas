@@ -14,7 +14,7 @@ uses
   wxObjectInspector.Core;
 
 type
-  TzGraphicEditDialog = class(TzObjectInspectorDialogBase)
+  TzGraphicEditDialog = class(TwxObjectInspectorDialog)
     BtnCancel: TButton;
     BtnLoad: TButton;
     BtnSave: TButton;

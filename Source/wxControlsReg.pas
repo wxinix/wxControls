@@ -14,7 +14,7 @@ resourcestring
 
 procedure Register;
 begin
-  RegisterComponents(SzControls, [TzObjectInspector]);
+  RegisterComponents(SzControls, [TwxObjectInspector]);
 end;
 
 end.

@@ -517,7 +517,7 @@ begin
   if strAfterCurTypeStr.IsEmpty then
     Exit(False);
 
-  rttiPropertyArray := TzRttiType(rttiType).GetUsedProperties;
+  rttiPropertyArray := TwxRttiType(rttiType).GetUsedProperties;
 
   for rttiProperty in rttiPropertyArray do
   begin
@@ -650,7 +650,7 @@ begin
 
   rttiContext := TRttiContext.Create;
   rttiType := rttiContext.GetType(AObject.ClassInfo);
-  rttiPropertyList := TzRttiType(rttiType).GetUsedProperties;
+  rttiPropertyList := TwxRttiType(rttiType).GetUsedProperties;
 
   for rttiProperty in rttiPropertyList do
     if IsPropVisible(rttiProperty, AObject, AVisibility) then

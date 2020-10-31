@@ -45,31 +45,31 @@ type
     /// <summary>
     ///   Callbacks on different dialog code.
     /// </summary>
-    class function PerformDialogAction(const AItem: PzPropertyItem; AEditDialog: TComponent;
+    class function PerformDialogAction(const AItem: PwxPropertyItem; AEditDialog: TComponent;
       ACode: DialogActionCode): Integer; virtual;
     /// <summary>
     ///   Get the value returned after editing from the AEditDialog .
     /// </summary>
-    class function DialogResultValue(const AItem: PzPropertyItem; AEditDialog: TComponent): TValue; virtual;
+    class function DialogResultValue(const AItem: PwxPropertyItem; AEditDialog: TComponent): TValue; virtual;
     /// <summary>
     ///   Get customized dialog for current item .
     /// </summary>
-    class function GetDialog(const AItem: PzPropertyItem): TComponentClass; virtual;
+    class function GetDialog(const AItem: PwxPropertyItem): TComponentClass; virtual;
     /// <summary>
     ///   Get the value when the user click the ExtraRect .
     /// </summary>
-    class function GetExtraRectResultValue(const AItem: PzPropertyItem): TValue; virtual;
+    class function GetExtraRectResultValue(const AItem: PwxPropertyItem): TValue; virtual;
     /// <summary>
     ///   Check if value has an ExtraRect like (Color,Boolean)type .
     /// </summary>
     /// <returns>
     ///   non zero to indicate that value must use an ExtraRect .
     /// </returns>
-    class function GetExtraRectWidth(const AItem: PzPropertyItem): Integer; virtual;
+    class function GetExtraRectWidth(const AItem: PwxPropertyItem): Integer; virtual;
     /// <summary>
     ///   Return a user defined custom ListBox .
     /// </summary>
-    class function GetListBoxClass(const AItem: PzPropertyItem): TComponentClass;
+    class function GetListBoxClass(const AItem: PwxPropertyItem): TComponentClass;
     /// <summary>
     ///   Return ListBox AStrings for the current item. The item must have a
     ///   list. If the item cannot have list, an EItemHasNoList exception will
@@ -78,30 +78,30 @@ type
     /// <exception cref="EItemHasNoList">
     ///   The item is not allowed to have list.
     /// </exception>
-    class procedure GetListItems(const AItem: PzPropertyItem; AStrings: TStrings); virtual;
+    class procedure GetListItems(const AItem: PwxPropertyItem; AStrings: TStrings); virtual;
     /// <summary>
     ///   According to the value type of the property item, return a TValue
     ///   data based on the "untyped" AValue. If the type is TFont, TColor, or
     ///   TIcon, then it is treated as UINT64, i.e., the object pointer treated
     ///   as an unsigned integer.
     /// </summary>
-    class function GetValue(const AItem: PzPropertyItem; const AValue): TValue; virtual;
+    class function GetValue(const AItem: PwxPropertyItem; const AValue): TValue; virtual;
     /// <summary>
     ///   Return the value type of the property item.
     /// </summary>
-    class function GetValueType(const AItem: PzPropertyItem): PropertyItemValueType; virtual;
+    class function GetValueType(const AItem: PwxPropertyItem): PropertyItemValueType; virtual;
     /// <summary>
     ///   Check if the current item can have button .
     /// </summary>
-    class function HasButton(const AItem: PzPropertyItem): Boolean; virtual;
+    class function HasButton(const AItem: PwxPropertyItem): Boolean; virtual;
     /// <summary>
     ///   Check if the current item has a customized dialog for editing value.
     /// </summary>
-    class function HasDialog(const AItem: PzPropertyItem): Boolean; virtual;
+    class function HasDialog(const AItem: PwxPropertyItem): Boolean; virtual;
     /// <summary>
     ///   Check if the current item has a dropdown ListBox associated for editing value.
     /// </summary>
-    class function HasListBox(const AItem: PzPropertyItem): Boolean; virtual;
+    class function HasListBox(const AItem: PwxPropertyItem): Boolean; virtual;
     /// <summary>
     ///   Register an editor for a specific type.
     /// </summary>
@@ -120,15 +120,15 @@ type
     /// <summary>
     ///   Set the specified value to the property item.
     /// </summary>
-    class procedure SetValue(const AItem: PzPropertyItem; var AValue: TValue); virtual;
+    class procedure SetValue(const AItem: PwxPropertyItem; var AValue: TValue); virtual;
     /// <summary>
     ///   Convert the input string to specified type.
     /// </summary>
-    class function StrToValue(const AItem: PzPropertyItem; const AString: string): TValue;
+    class function StrToValue(const AItem: PwxPropertyItem; const AString: string): TValue;
     /// <summary>
     ///   Check if item can assign value that is not listed in ListBox .
     /// </summary>
-    class function ValueHasOpenProbabilities(const AItem: PzPropertyItem): Boolean; virtual;
+    class function ValueHasOpenProbabilities(const AItem: PwxPropertyItem): Boolean; virtual;
   public
     /// <summary>
     ///   This is the square rect of the color item. It shows the color, on the
@@ -183,7 +183,7 @@ begin
   FEditors.Free;
 end;
 
-class function TzObjectInspectorValueManager.PerformDialogAction(const AItem: PzPropertyItem;
+class function TzObjectInspectorValueManager.PerformDialogAction(const AItem: PwxPropertyItem;
     AEditDialog: TComponent; ACode: DialogActionCode): Integer;
 begin
   Result := mrOK;
@@ -191,15 +191,15 @@ begin
   case ACode of
     dcInit:
       begin
-        if AEditDialog is TzObjectInspectorDialogBase then
-          TzObjectInspectorDialogBase(AEditDialog).PropertyItem := AItem;
+        if AEditDialog is TwxObjectInspectorDialog then
+          TwxObjectInspectorDialog(AEditDialog).PropertyItem := AItem;
       end;
     dcBeforeDestroy:
       { Do nothing for now };
     dcShow:
       begin
-        if AEditDialog is TzObjectInspectorDialogBase then
-          Result := TzObjectInspectorDialogBase(AEditDialog).ShowModal;
+        if AEditDialog is TwxObjectInspectorDialog then
+          Result := TwxObjectInspectorDialog(AEditDialog).ShowModal;
         if AEditDialog is TCommonDialog then
           Result := TCommonDialog(AEditDialog).Execute.ToInteger;
       end;
@@ -208,7 +208,7 @@ begin
   end;
 end;
 
-class function TzObjectInspectorValueManager.DialogResultValue(const AItem: PzPropertyItem;
+class function TzObjectInspectorValueManager.DialogResultValue(const AItem: PwxPropertyItem;
   AEditDialog: TComponent): TValue;
 var
   propType: PTypeInfo;
@@ -225,7 +225,7 @@ begin
   Result := FScaledColorRectWidth;
 end;
 
-class function TzObjectInspectorValueManager.GetDialog(const AItem: PzPropertyItem): TComponentClass;
+class function TzObjectInspectorValueManager.GetDialog(const AItem: PwxPropertyItem): TComponentClass;
 begin
   Result := nil;
 
@@ -234,7 +234,7 @@ begin
 end;
 
 class function TzObjectInspectorValueManager.GetExtraRectResultValue
-  (const AItem: PzPropertyItem): TValue;
+  (const AItem: PwxPropertyItem): TValue;
 var
   boolVal: Boolean;
   enumSet: TIntegerSet;
@@ -267,7 +267,7 @@ begin
   end;
 end;
 
-class function TzObjectInspectorValueManager.GetExtraRectWidth(const AItem: PzPropertyItem): Integer;
+class function TzObjectInspectorValueManager.GetExtraRectWidth(const AItem: PwxPropertyItem): Integer;
 var
   elementSize: TSize;
   themeDetails: TThemedElementDetails;
@@ -286,22 +286,22 @@ begin
   end;
 end;
 
-class function TzObjectInspectorValueManager.GetListBoxClass(const AItem: PzPropertyItem): TComponentClass;
+class function TzObjectInspectorValueManager.GetListBoxClass(const AItem: PwxPropertyItem): TComponentClass;
 begin
   // Color List Box excluded.
   if AItem.Value.TypeInfo = TypeInfo(TColor) then
-    Exit(TzColorListBox);
+    Exit(TwxColorListBox);
   // Cursor List Box excluded.
   if AItem.Value.TypeInfo = TypeInfo(TCursor) then
-    Exit(TzCursorListBox);
+    Exit(TwxCursorListBox);
   // ShortcutListBox excluded.
   if AItem.Value.TypeInfo = TypeInfo(TShortCut) then
-    Exit(TzShortCutListBox);
+    Exit(TwxShortcutListBox);
   // Default one.
-  Result := TzObjectInspectorListBox;
+  Result := TwxObjectInspectorListBox;
 end;
 
-class procedure TzObjectInspectorValueManager.GetListItems(const AItem: PzPropertyItem;
+class procedure TzObjectInspectorValueManager.GetListItems(const AItem: PwxPropertyItem;
   AStrings: TStrings);
 var
   I: Integer;
@@ -359,7 +359,7 @@ begin
   Result := FMinimumPlusSignWidth;
 end;
 
-class function TzObjectInspectorValueManager.GetValue(const AItem: PzPropertyItem;
+class function TzObjectInspectorValueManager.GetValue(const AItem: PwxPropertyItem;
   const AValue): TValue;
 var
   intSet: TIntegerSet;
@@ -424,7 +424,7 @@ begin
   end;
 end;
 
-class function TzObjectInspectorValueManager.GetValueType(const AItem: PzPropertyItem): PropertyItemValueType;
+class function TzObjectInspectorValueManager.GetValueType(const AItem: PwxPropertyItem): PropertyItemValueType;
 begin
   if AItem.Value.TypeInfo = nil then
     Exit(vtUnknown);
@@ -485,7 +485,7 @@ begin
   Result := vtUnknown;
 end;
 
-class function TzObjectInspectorValueManager.HasButton(const AItem: PzPropertyItem): Boolean;
+class function TzObjectInspectorValueManager.HasButton(const AItem: PwxPropertyItem): Boolean;
 begin
   Result := False;
 
@@ -493,7 +493,7 @@ begin
     Result := True;
 end;
 
-class function TzObjectInspectorValueManager.HasDialog(const AItem: PzPropertyItem): Boolean;
+class function TzObjectInspectorValueManager.HasDialog(const AItem: PwxPropertyItem): Boolean;
 var
   rttiType: TRttiType;
   rttiContext: TRttiContext;
@@ -523,7 +523,7 @@ begin
     FEditors.Add(AItem.Value.TypeInfo, editorClass);
 end;
 
-class function TzObjectInspectorValueManager.HasListBox(const AItem: PzPropertyItem): Boolean;
+class function TzObjectInspectorValueManager.HasListBox(const AItem: PwxPropertyItem): Boolean;
 begin
   case GetValueType(AItem) of
     vtObject:
@@ -572,13 +572,13 @@ begin
   FScaledColorRectWidth := AValue;
 end;
 
-class procedure TzObjectInspectorValueManager.SetValue(const AItem: PzPropertyItem;
+class procedure TzObjectInspectorValueManager.SetValue(const AItem: PwxPropertyItem;
   var AValue: TValue);
 begin
   AItem^.AssociatedProperty.SetValue(AItem.Instance, AValue);
 end;
 
-class function TzObjectInspectorValueManager.StrToValue(const AItem: PzPropertyItem;
+class function TzObjectInspectorValueManager.StrToValue(const AItem: PwxPropertyItem;
   const AString: string): TValue;
 var
   doubleVal: Double;
@@ -635,7 +635,7 @@ begin
 end;
 
 class function TzObjectInspectorValueManager.ValueHasOpenProbabilities
-  (const AItem: PzPropertyItem): Boolean;
+  (const AItem: PwxPropertyItem): Boolean;
 begin
   case GetValueType(AItem) of
     vtColor, vtString, vtUnknown:

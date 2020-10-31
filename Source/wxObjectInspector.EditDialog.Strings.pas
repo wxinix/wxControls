@@ -12,7 +12,7 @@ uses
   wxObjectInspector.Core;
 
 type
-  TzStringsEditDialog = class(TzObjectInspectorDialogBase)
+  TzStringsEditDialog = class(TwxObjectInspectorDialog)
     BtnCancel: TButton;
     BtnOk: TButton;
     GroupBox: TGroupBox;

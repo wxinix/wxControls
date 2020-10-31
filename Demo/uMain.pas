@@ -24,7 +24,7 @@ uses
 
 type
   TMain = class(TForm)
-    zObjectInspector1: TzObjectInspector;
+    zObjectInspector1: TwxObjectInspector;
     Panel1: TPanel;
     Panel2: TPanel;
     GroupBox1: TGroupBox;
@@ -52,7 +52,8 @@ type
     procedure CheckBox2Click(Sender: TObject);
     procedure StylesComboChange(Sender: TObject);
     procedure BtnMultiComponentsClick(Sender: TObject);
-    function zObjectInspector1BeforeAddItem(Sender: TControl; AItem: PzPropertyItem): Boolean;
+    procedure FormResize(Sender: TObject);
+    function zObjectInspector1BeforeAddItem(Sender: TControl; AItem: PwxPropertyItem): Boolean;
   private
     FIncludeEvent: Boolean;
     procedure GetObjsList;
@@ -72,10 +73,10 @@ uses TypInfo;
 
 procedure TMain.BtnMultiComponentsClick(Sender: TObject);
 var
-  Host: TzObjectHost;
+  Host: TwxObjectHost;
   i: Integer;
 begin
-  Host := TzObjectHost.Create;
+  Host := TwxObjectHost.Create;
   with GroupBox1 do
     for i := 0 to ControlCount - 1 do
       Host.AddObject(Controls[i], Controls[i].Name);
@@ -146,7 +147,12 @@ begin
   EnumStyles;
 end;
 
-function TMain.zObjectInspector1BeforeAddItem(Sender: TControl; AItem: PzPropertyItem): Boolean;
+procedure TMain.FormResize(Sender: TObject);
+begin
+  Self.zObjectInspector1.Invalidate;
+end;
+
+function TMain.zObjectInspector1BeforeAddItem(Sender: TControl; AItem: PwxPropertyItem): Boolean;
 begin
   Result := True;
   if not FIncludeEvent then

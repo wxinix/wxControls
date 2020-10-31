@@ -14,9 +14,10 @@ object Main: TMain
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
-  object zObjectInspector1: TzObjectInspector
+  object zObjectInspector1: TwxObjectInspector
     Left = 0
     Top = 41
     Width = 273
@@ -58,7 +59,6 @@ object Main: TMain
     Text = 'Test'
     TrackChange = False
     ValueColor = clNavy
-    ExplicitTop = 38
   end
   object Panel1: TPanel
     Left = 0
