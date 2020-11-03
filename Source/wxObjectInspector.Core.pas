@@ -48,7 +48,7 @@ type
   /// <seealso cref="TwxPropertyItem.ValueAsString" />
   /// <seealso cref="SysUtils.TFloatFormat" />
   TwxFloatPreference = class(TPersistent)
-  private
+  strict private
     FExpPrecision: Integer;
     FMaxDigits: Integer;
   public
@@ -67,11 +67,11 @@ type
     property MaxDigits: Integer read FMaxDigits write FMaxDigits;
   end;
 
-/// <summary>
-  ///  This class is an extension of TStack. Whenever a Canvas is pushed on stack,
-  ///  the associated Pen, Font, and Brush objects are pushed in an internal stack.
-  ///  When popping up the Canvas, the saved Pen, Font and Brush objects are restored
-  ///  with the Canvas.
+  /// <summary>
+  ///   This class is an extension of TStack. Whenever a Canvas is pushed on
+  ///   stack, the associated Pen, Font, and Brush objects are pushed in an
+  ///   internal stack. When popping up the Canvas, the associated saved Pen,
+  ///   Font and Brush objects.
   /// </summary>
   TwxCanvasStack = class(TStack<TCanvas>)
     {$REGION 'CanvasObjectsStore'}
@@ -97,8 +97,7 @@ type
     FObjectsStack: TStack<ICanvasObjectsStore>;
     {$REGION 'Constructor & Destructor'}
   public
-    constructor Create; overload; virtual;
-    constructor Create(const ACollection: TEnumerable<TCanvas>); overload;
+    constructor Create;
     destructor Destroy; override;
     {$ENDREGION}
   public
@@ -132,9 +131,9 @@ type
   TwxRttiType = class(TRttiType)
     /// <summary>
     ///   Get a list of properties that are declared by the owner object
-    ///   itself, or by its parent object and has been assigned a value. If the
-    ///   property is declared by parent objects, and has not been assigned a
-    ///   value (i.e., not used), it will not be included.
+    ///   itself, plus properties from its parent object that have distinct
+    ///   names. If the property declared by its parent objects uses a name
+    ///   that the owner object already uses, it will not be included.
     /// </summary>
     function GetUsedProperties: TArray<TRttiProperty>;
   end;
@@ -216,44 +215,45 @@ type
     FSetElementValue: Integer;
     FVisible: Boolean;
     {$REGION 'Property gettors and settors'}
-    function get_AssociatedComponentParentForm: TCustomForm;
-    function get_AssociatedProperty: TRttiProperty;
-    procedure set_AssociatedProperty(const AValue: TRttiProperty);
-    function get_CategoryIndex: Integer;
-    procedure set_CategoryIndex(const AValue: Integer);
-    function get_CategoryName: string;
-    procedure set_CategoryName(const AValue: string);
-    function get_ChildCount: Integer;
-    function get_ChildItems(const AIndex: Integer): PwxPropertyItem;
-    function get_Component: TObject;
-    procedure set_Component(const AValue: TObject);
-    function get_Expanded: Boolean;
-    procedure set_FloatPreference(const AValue: TwxFloatPreference);
-    function get_HasChild: Boolean;
-    function get_Instance: TObject;
-    procedure set_Instance(const AValue: TObject);
-    function get_IsCategory: Boolean;
-    procedure SetIsCategory(const AValue: Boolean);
-    function get_IsClass: Boolean;
-    function get_IsComponent: Boolean;
-    function get_IsEmpty: Boolean;
-    function get_IsEnum: Boolean;
-    function get_IsSet: Boolean;
-    function get_IsSetElement: Boolean;
-    function get_MayHaveChild: Boolean;
-    function get_Name: string;
-    function get_ObjectVisibility: TMemberVisibility;
-    procedure set_ObjectVisibility(const AValue: TMemberVisibility);
-    function get_Parent: PwxPropertyItem;
-    procedure set_Parent(const AValue: PwxPropertyItem);
-    function get_QualifiedName: string;
-    procedure set_QualifiedName(const AValue: string);
-    function get_SetElementValue: Integer;
-    procedure set_SetElementValue(const AValue: Integer);
-    function get_Value: TValue;
-    function get_ValueAsString: string;
-    function get_Visible: Boolean;
-    procedure set_Visible(const AValue: Boolean);
+    function Get_AssociatedComponentParentForm: TCustomForm;
+    function Get_AssociatedProperty: TRttiProperty;
+    procedure Set_AssociatedProperty(const AValue: TRttiProperty);
+    function Get_CategoryIndex: Integer;
+    procedure Set_CategoryIndex(const AValue: Integer);
+    function Get_CategoryName: string;
+    procedure Set_CategoryName(const AValue: string);
+    function Get_ChildCount: Integer;
+    function Get_ChildItems(const AIndex: Integer): PwxPropertyItem;
+    function Get_Component: TObject;
+    procedure Set_Component(const AValue: TObject);
+    function Get_Expanded: Boolean;
+    procedure Set_FloatPreference(const AValue: TwxFloatPreference);
+    function Get_HasChild: Boolean;
+    function Get_Instance: TObject;
+    procedure Set_Instance(const AValue: TObject);
+    function Get_IsCategory: Boolean;
+    procedure Set_IsCategory(const AValue: Boolean);
+    function Get_IsClass: Boolean;
+    function Get_IsComponent: Boolean;
+    function Get_IsEmpty: Boolean;
+    function Get_IsEnum: Boolean;
+    function Get_IsSet: Boolean;
+    function Get_IsSetElement: Boolean;
+    function Get_MayHaveChild: Boolean;
+    function Get_Name: string;
+    function Get_ObjectVisibility: TMemberVisibility;
+    procedure Set_ObjectVisibility(const AValue: TMemberVisibility);
+    procedure Set_OwnerList(const AValue: TwxPropertyItemList);
+    function Get_Parent: PwxPropertyItem;
+    procedure Set_Parent(const AValue: PwxPropertyItem);
+    function Get_QualifiedName: string;
+    procedure Set_QualifiedName(const AValue: string);
+    function Get_SetElementValue: Integer;
+    procedure Set_SetElementValue(const AValue: Integer);
+    function Get_Value: TValue;
+    function Get_ValueAsString: string;
+    function Get_Visible: Boolean;
+    procedure Set_Visible(const AValue: Boolean);
     {$ENDREGION}
   private
     /// <summary>
@@ -264,7 +264,6 @@ type
     ///   OwnerList list is nil.
     /// </exception>
     procedure CheckOwnerList;
-
   public
     /// <summary>
     ///   This zero-out the memory. All members will be reset to zero.
@@ -288,7 +287,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property AssociatedComponentParentForm: TCustomForm read get_AssociatedComponentParentForm;
+    property AssociatedComponentParentForm: TCustomForm read Get_AssociatedComponentParentForm;
 
     /// <summary>
     ///   This is the associated RTTI property of the item.
@@ -296,7 +295,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property AssociatedProperty: TRttiProperty read get_AssociatedProperty write set_AssociatedProperty;
+    property AssociatedProperty: TRttiProperty read Get_AssociatedProperty write Set_AssociatedProperty;
 
     /// <summary>
     ///   If the current item is a category item, this provides the index of
@@ -306,7 +305,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property CategoryIndex: Integer read get_CategoryIndex write set_CategoryIndex;
+    property CategoryIndex: Integer read Get_CategoryIndex write Set_CategoryIndex;
 
     /// <summary>
     ///   If the current item is a category item, this provides the name of the
@@ -315,7 +314,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property CategoryName: string read get_CategoryName write set_CategoryName;
+    property CategoryName: string read Get_CategoryName write Set_CategoryName;
 
     /// <summary>
     ///   Get the total count of child items.
@@ -323,24 +322,25 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property ChildCount: Integer read get_ChildCount;
+    property ChildCount: Integer read Get_ChildCount;
 
     /// <summary>
-    ///   Get the child item by index. If the index is out of bound, a nil will
+    ///   Get the child item by index. If the index is out of bound, nil will
     ///   be returned.
     /// </summary>
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property ChildItems[const AIndex: Integer]: PwxPropertyItem read get_ChildItems;
+    property ChildItems[const AIndex: Integer]: PwxPropertyItem read Get_ChildItems;
 
     /// <summary>
-    ///   The component being inspected. It can be a TObject, or a TComponent.
+    ///   The owner component being inspected. It can be a TObject, or a
+    ///   TComponent.
     /// </summary>
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property Component: TObject read get_Component write set_Component;
+    property Component: TObject read Get_Component write Set_Component;
 
     /// <summary>
     ///   The subject item has child items, and is expanded.
@@ -348,7 +348,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property Expanded: Boolean read get_Expanded;
+    property Expanded: Boolean read Get_Expanded;
 
     /// <summary>
     ///   Floating point preference for presenting floating point numbers. It
@@ -358,12 +358,12 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property FloatPreference: TwxFloatPreference write set_FloatPreference;
+    property FloatPreference: TwxFloatPreference write Set_FloatPreference;
 
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property HasChild: Boolean read get_HasChild;
+    property HasChild: Boolean read Get_HasChild;
 
     /// <summary>
     ///   The instance of the property variable associated with this item.
@@ -371,7 +371,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property Instance: TObject read get_Instance write set_Instance;
+    property Instance: TObject read Get_Instance write Set_Instance;
 
     /// <summary>
     ///   Whether this item is a category.
@@ -379,17 +379,17 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property IsCategory: Boolean read get_IsCategory write SetIsCategory;
+    property IsCategory: Boolean read Get_IsCategory write Set_IsCategory;
 
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property IsClass: Boolean read get_IsClass;
+    property IsClass: Boolean read Get_IsClass;
 
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property IsComponent: Boolean read get_IsComponent;
+    property IsComponent: Boolean read Get_IsComponent;
 
     /// <summary>
     ///   Check current item is empty or not. Empty means all members are
@@ -398,7 +398,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property IsEmpty: Boolean read get_IsEmpty;
+    property IsEmpty: Boolean read Get_IsEmpty;
 
     /// <summary>
     ///   Check if current item is enumeration type.
@@ -406,7 +406,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property IsEnum: Boolean read get_IsEnum;
+    property IsEnum: Boolean read Get_IsEnum;
 
     /// <summary>
     ///   Check if current item is a set.
@@ -414,7 +414,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property IsSet: Boolean read get_IsSet;
+    property IsSet: Boolean read Get_IsSet;
 
     /// <summary>
     ///   Check if current element is a set element.
@@ -422,7 +422,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property IsSetElement: Boolean read get_IsSetElement;
+    property IsSetElement: Boolean read Get_IsSetElement;
 
     /// <summary>
     ///   Whether the item may have child. Class, Set and Category can have
@@ -431,7 +431,7 @@ type
     /// <remarks>
     ///   Read-Only.
     /// </remarks>
-    property MayHaveChild: Boolean read get_MayHaveChild;
+    property MayHaveChild: Boolean read Get_MayHaveChild;
 
     /// <summary>
     ///   The name of the property associated with the item.
@@ -439,7 +439,7 @@ type
     /// <remarks>
     ///   Read Only.
     /// </remarks>
-    property Name: string read get_Name;
+    property Name: string read Get_Name;
 
     /// <summary>
     ///   Object visibility value inherited from the object inspector. If the
@@ -452,15 +452,15 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property ObjectVisibility: TMemberVisibility read get_ObjectVisibility write set_ObjectVisibility;
+    property ObjectVisibility: TMemberVisibility read Get_ObjectVisibility write Set_ObjectVisibility;
 
     /// <summary>
-    ///   OwnerList of the item, i.e., the master item list.
+    ///   OwnerList of the item, i.e., the master item list managed by the inspector.
     /// </summary>
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property OwnerList: TwxPropertyItemList read FOwnerList write FOwnerList;
+    property OwnerList: TwxPropertyItemList read FOwnerList write Set_OwnerList;
 
     /// <summary>
     ///   Parent item of the current item.
@@ -468,7 +468,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property Parent: PwxPropertyItem read get_Parent write set_Parent;
+    property Parent: PwxPropertyItem read Get_Parent write Set_Parent;
 
     /// <summary>
     ///   Qualified name of the item. This may be prefixed with a category name, or suffixed with
@@ -477,7 +477,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property QualifiedName: string read get_QualifiedName write set_QualifiedName;
+    property QualifiedName: string read Get_QualifiedName write Set_QualifiedName;
 
     /// <summary>
     ///   If the subject item is an element of a set, SetElementValue reflects
@@ -486,7 +486,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property SetElementValue: Integer read get_SetElementValue write set_SetElementValue;
+    property SetElementValue: Integer read Get_SetElementValue write Set_SetElementValue;
 
     /// <summary>
     ///   Get the value of this item, based on the RTTI type, and the
@@ -495,7 +495,7 @@ type
     /// <remarks>
     ///   Read Only.
     /// </remarks>
-    property Value: TValue read get_Value;
+    property Value: TValue read Get_Value;
 
     /// <summary>
     ///   String representation of the item's value. If current item is an
@@ -512,7 +512,7 @@ type
     /// <remarks>
     ///   Read Only.
     /// </remarks>
-    property ValueAsString: string read get_ValueAsString;
+    property ValueAsString: string read Get_ValueAsString;
 
     /// <summary>
     ///   Whether the item is visible.
@@ -520,7 +520,7 @@ type
     /// <remarks>
     ///   Read-Write. Externally set after creation.
     /// </remarks>
-    property Visible: Boolean read get_Visible write set_Visible;
+    property Visible: Boolean read Get_Visible write Set_Visible;
   end;
 
  /// <summary>
@@ -548,8 +548,8 @@ type
     ///   before saving to the list.
     /// </summary>
     FRecPtrList: TList;
-    function get_Item(const AIndex: Integer): PT;
-    function get_Count: Integer;
+    function Get_Item(const AIndex: Integer): PT;
+    function Get_Count: Integer;
   strict protected
     /// <summary>
     ///   Convert PT to a general pointer. This is needed to enable the generic
@@ -664,12 +664,12 @@ type
     /// <exception cref="EArgumentOutOfRangeException">
     ///   (AIndex &lt; 0) or (AIndex &gt;= Count)
     /// </exception>
-    property Items[const AIndex: Integer]: PT read get_Item;
+    property Items[const AIndex: Integer]: PT read Get_Item;
 
     /// <summary>
     ///   Total number of items in the list.
     /// </summary>
-    property Count: Integer read get_Count;
+    property Count: Integer read Get_Count;
   end;
 
   TwxPropertyItemList = class(TwxRecordList<TwxPropertyItem, PwxPropertyItem>)
@@ -721,22 +721,22 @@ type
   private
     FIsMouseLButtonDown: Boolean;
     {$REGION 'Property Gettors: IzControl Interface'}
-    function get_IsMouseDown: Boolean;
-    function get_IsMouseInControl: Boolean;
-    function get_IsVclStyleUsed: Boolean;
-    function get_UseStyleBorder: Boolean;
-    function get_UseStyleColor: Boolean;
-    function get_UseStyleFont: Boolean;
+    function Get_IsMouseDown: Boolean;
+    function Get_IsMouseInControl: Boolean;
+    function Get_IsVclStyleUsed: Boolean;
+    function Get_UseStyleBorder: Boolean;
+    function Get_UseStyleColor: Boolean;
+    function Get_UseStyleFont: Boolean;
     {$ENDREGION}
     procedure WMLButtonDown(var AMessage: TWMLButtonDown); message WM_LBUTTONDOWN;
     procedure WMLButtonUp(var AMessage: TWMLButtonUp); message WM_LBUTTONUP;
   public
-    property IsMouseDown: Boolean read get_IsMouseDown;
-    property IsMouseInControl: Boolean read get_IsMouseInControl;
-    property IsVclStyleUsed: Boolean read get_IsVclStyleUsed;
-    property UseStyleBorder: Boolean read get_UseStyleBorder;
-    property UseStyleColor: Boolean read get_UseStyleColor;
-    property UseStyleFont: Boolean read get_UseStyleFont;
+    property IsMouseDown: Boolean read Get_IsMouseDown;
+    property IsMouseInControl: Boolean read Get_IsMouseInControl;
+    property IsVclStyleUsed: Boolean read Get_IsVclStyleUsed;
+    property UseStyleBorder: Boolean read Get_UseStyleBorder;
+    property UseStyleColor: Boolean read Get_UseStyleColor;
+    property UseStyleFont: Boolean read Get_UseStyleFont;
   end;
 
   TwxAbstractObjectInspector = class abstract(TwxCustomControl)
@@ -767,11 +767,11 @@ type
     FSortByCategory: Boolean;
     FVisibleItems: TList<PwxPropertyItem>;
     {$REGION 'Property gettors and settors'}
-    procedure set_BorderStyle(const Value: TBorderStyle);
-    procedure set_Component(AValue: TObject);
-    function get_FloatPreference: TwxFloatPreference;
-    procedure set_ObjectVisibility(const AValue: TMemberVisibility);
-    procedure set_SortByCategory(const AValue: Boolean);
+    procedure Set_BorderStyle(const Value: TBorderStyle);
+    procedure Set_Component(AValue: TObject);
+    function Get_FloatPreference: TwxFloatPreference;
+    procedure Set_ObjectVisibility(const AValue: TMemberVisibility);
+    procedure Set_SortByCategory(const AValue: Boolean);
     {$ENDREGION}
   strict protected
     function CircularLinkedProperties: TList<string>;
@@ -805,21 +805,21 @@ type
     function NeedUpdate: Boolean;
     procedure UpdateProperties(const ADoRepaint: Boolean = False); virtual; abstract;
 
-    property BorderStyle: TBorderStyle read FBorderStyle write set_BorderStyle;
+    property BorderStyle: TBorderStyle read FBorderStyle write Set_BorderStyle;
     property CanvasStack: TwxCanvasStack read FCanvasStack;
     property Categories: TList<string> read FCategories;
-    property Component: TObject read FComponent write set_Component;
+    property Component: TObject read FComponent write Set_Component;
     property ComponentClassType: TClass read FComponentClassType;
     property DefaultCategoryName: string read FDefaultCategoryName write FDefaultCategoryName;
     property DefaultPropertyValue: TDictionary<string, string> read FDefaultPropertyValueMap;
-    property FloatPreference: TwxFloatPreference read get_FloatPreference;
+    property FloatPreference: TwxFloatPreference read Get_FloatPreference;
 
     property ItemHeight: Integer read FItemHeight write FItemHeight;
 
     property Items: TwxPropertyItemList read FItems;
-    property ObjectVisibility: TMemberVisibility read FObjectVisibility write set_ObjectVisibility default mvPublic;
+    property ObjectVisibility: TMemberVisibility read FObjectVisibility write Set_ObjectVisibility default mvPublic;
     property ReadOnly: Boolean read FReadOnly write FReadOnly;
-    property SortByCategory: Boolean read FSortByCategory write set_SortByCategory;
+    property SortByCategory: Boolean read FSortByCategory write Set_SortByCategory;
 
     property OnAutoExpandItemOnInit: TzPropertyItemEvent read FOnAutoExpandItemOnInit write FOnAutoExpandItemOnInit;
     property OnBeforeAddItem: TzPropertyItemEvent read FOnBeforeAddItem write FOnBeforeAddItem;
@@ -833,9 +833,9 @@ type
     FSplitterDown: Boolean;
     FSplitterPos: Integer;
     {$REGION 'Property gettors and settors'}
-    procedure set_SplitterColor(const AValue: TColor);
-    procedure set_SplitterPos(const AValue: Integer);
-    function get_SplitterRect: TRect;
+    procedure Set_SplitterColor(const AValue: TColor);
+    procedure Set_SplitterPos(const AValue: Integer);
+    function Get_SplitterRect: TRect;
     {$ENDREGION}
   private
     procedure WMMouseMove(var AMessage: TWMMouseMove); message WM_MouseMove;
@@ -851,9 +851,9 @@ type
     destructor Destroy; override;
 
     property FixedSplitter: Boolean read FFixedSplitter write FFixedSplitter;
-    property SplitterColor: TColor read FSplitterColor write set_SplitterColor;
-    property SplitterPos: Integer read FSplitterPos write set_SplitterPos;
-    property SplitterRect: TRect read get_SplitterRect;
+    property SplitterColor: TColor read FSplitterColor write Set_SplitterColor;
+    property SplitterPos: Integer read FSplitterPos write Set_SplitterPos;
+    property SplitterRect: TRect read Get_SplitterRect;
     property OnSplitterPosChanged: TzSplitterPosChangedEvent read FOnSplitterPosChanged write FOnSplitterPosChanged;
   end;
 
@@ -867,12 +867,12 @@ type
     FOnHeaderMouseDown: TzHeaderMouseDownEvent;
     FShowHeader: Boolean;
     {$REGION 'Property gettors and settors'}
-    function get_HeaderPropRect: TRect;
-    procedure set_HeaderPropText(const AValue: string);
-    function get_HeaderRect: TRect;
-    function get_HeaderValueRect: TRect;
-    procedure set_HeaderValueText(const AValue: string);
-    procedure set_ShowHeader(const AValue: Boolean);
+    function Get_HeaderPropRect: TRect;
+    procedure Set_HeaderPropText(const AValue: string);
+    function Get_HeaderRect: TRect;
+    function Get_HeaderValueRect: TRect;
+    procedure Set_HeaderValueText(const AValue: string);
+    procedure Set_ShowHeader(const AValue: Boolean);
     {$ENDREGION}
   private
     procedure WMLButtonDown(var AMessage: TWMLButtonDown); message WM_LBUTTONDOWN;
@@ -883,12 +883,12 @@ type
   public
     constructor Create(AOwner: TComponent); override;
 
-    property HeaderPropRect: TRect read get_HeaderPropRect;
-    property HeaderPropText: string read FHeaderPropText write set_HeaderPropText;
-    property HeaderRect: TRect read get_HeaderRect;
-    property HeaderValueRect: TRect read get_HeaderValueRect;
-    property HeaderValueText: string read FHeaderValueText write set_HeaderValueText;
-    property ShowHeader: Boolean read FShowHeader write set_ShowHeader;
+    property HeaderPropRect: TRect read Get_HeaderPropRect;
+    property HeaderPropText: string read FHeaderPropText write Set_HeaderPropText;
+    property HeaderRect: TRect read Get_HeaderRect;
+    property HeaderValueRect: TRect read Get_HeaderValueRect;
+    property HeaderValueText: string read FHeaderValueText write Set_HeaderValueText;
+    property ShowHeader: Boolean read FShowHeader write Set_ShowHeader;
     property OnHeaderMouseDown: TzHeaderMouseDownEvent read FOnHeaderMouseDown write FOnHeaderMouseDown;
   end;
 
@@ -897,7 +897,7 @@ type
     FPrevScrollPos: Integer;
     FScrollInfo: TScrollInfo;
     {$REGION 'Property gettors and settors'}
-    function get_VisiblePropCount: Integer;
+    function Get_VisiblePropCount: Integer;
     {$ENDREGION}
   private
     procedure CMFontChanged(var AMessage: TMessage); message CM_FONTCHANGED;
@@ -922,7 +922,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    property VisiblePropCount: Integer read get_VisiblePropCount;
+    property VisiblePropCount: Integer read Get_VisiblePropCount;
   end;
 
 {$REGION 'Object Inspector Edit Controls'}
@@ -937,8 +937,8 @@ type
     FScaledArrowSize: Integer;
     FScaledWidth: Integer;
     class constructor Create;
-    class procedure set_ScaledArrowSize(const AValue: Integer); static;
-    class procedure set_ScaledWidth(const AValue: Integer); static;
+    class procedure Set_ScaledArrowSize(const AValue: Integer); static;
+    class procedure Set_ScaledWidth(const AValue: Integer); static;
   private
     procedure WMLButtonDown(var AMessage: TWMLButtonDown); message WM_LBUTTONDOWN;
     procedure WMLButtonUp(var AMessage: TWMLButtonUp); message WM_LBUTTONUP;
@@ -950,23 +950,23 @@ type
     property DropDown: Boolean read FDropDown write FDropDown;
     property OnMouseDown;
 
-    class property ScaledArrowSize: Integer read FScaledArrowSize write set_ScaledArrowSize;
-    class property ScaledWidth: Integer read FScaledWidth write set_ScaledWidth;
+    class property ScaledArrowSize: Integer read FScaledArrowSize write Set_ScaledArrowSize;
+    class property ScaledWidth: Integer read FScaledWidth write Set_ScaledWidth;
   end;
 
   TwxObjectInspectorListBox = class(TCustomListBox)
   private
     FItem: Pointer;
     FItemEdit: TCustomEdit;
-    procedure set_Item(const AValue: Pointer);
-    procedure set_ItemEdit(const AValue: TCustomEdit);
+    procedure Set_Item(const AValue: Pointer);
+    procedure Set_ItemEdit(const AValue: TCustomEdit);
   protected
     procedure CreateParams(var AParams: TCreateParams); override;
     procedure CreateWnd; override;
     procedure MouseUp(AButton: TMouseButton; AShift: TShiftState; X, Y: Integer); override;
   public
-    property Item: Pointer read FItem write set_Item;
-    property ItemEdit: TCustomEdit read FItemEdit write set_ItemEdit;
+    property Item: Pointer read FItem write Set_Item;
+    property ItemEdit: TCustomEdit read FItemEdit write Set_ItemEdit;
     property ItemHeight;
     property OnMouseDown;
   end;
@@ -1003,13 +1003,13 @@ type
   TwxCursorListBox = class(TwxObjectInspectorCustomListBox)
   private
     procedure CursorCallBack(const AName: string);
-    function get_Cursor(AIndex: Integer): TCursor;
+    function Get_Cursor(AIndex: Integer): TCursor;
   protected
     procedure DrawItem(AIndex: Integer; ARect: TRect; AOwnerDrawState: TOwnerDrawState); override;
     procedure PopulateList; override; final;
   public
     constructor Create(AOwner: TComponent); override;
-    property Cursors[AIndex: Integer]: TCursor read get_Cursor;
+    property Cursors[AIndex: Integer]: TCursor read Get_Cursor;
   end;
 
   /// <summary>
@@ -1018,12 +1018,12 @@ type
   TwxShortcutListBox = class(TwxObjectInspectorCustomListBox)
   private
     procedure EnumShortCuts;
-    function get_ShortCut(AIndex: Integer): TShortCut;
+    function Get_ShortCut(AIndex: Integer): TShortCut;
   protected
     procedure PopulateList; override; final;
   public
     constructor Create(AOwner: TComponent); override;
-    property ShortCuts[AIndex: Integer]: TShortCut read get_ShortCut;
+    property ShortCuts[AIndex: Integer]: TShortCut read Get_ShortCut;
   end;
 
   TwxObjectInspectorEdit = class(TCustomEdit)
@@ -1035,9 +1035,9 @@ type
     FPropertyItem: PwxPropertyItem;
     FTextChanged: Boolean;
     {$REGION 'Gettors and Settors'}
-    function get_ListBox: TwxObjectInspectorListBox;
-    function get_PropertyItem: PwxPropertyItem;
-    procedure set_PropertyItem(const AItem: PwxPropertyItem);
+    function Get_ListBox: TwxObjectInspectorListBox;
+    function Get_PropertyItem: PwxPropertyItem;
+    procedure Set_PropertyItem(const AItem: PwxPropertyItem);
     {$ENDREGION}
   private
     procedure CMCancelMode(var AMessage: TCMCancelMode); message CM_CANCELMODE;
@@ -1133,8 +1133,8 @@ type
     property Top;
     property Width;
     {$ENDREGION}
-    property ListBox: TwxObjectInspectorListBox read get_ListBox;
-    property PropertyItem: PwxPropertyItem read get_PropertyItem write set_PropertyItem;
+    property ListBox: TwxObjectInspectorListBox read Get_ListBox;
+    property PropertyItem: PwxPropertyItem read Get_PropertyItem write Set_PropertyItem;
   end;
 {$ENDREGION}
 
@@ -1181,28 +1181,28 @@ type
     FValueColor: TColor;
     FValuesNeedHint: Boolean;
     {$REGION 'Property gettors and settors'}
-    procedure set_AllowSearch(const Value: Boolean);
-    procedure set_BoldNonDefaultValue(const Value: Boolean);
-    function get_ExtraRect(Index: Integer): TRect;
-    procedure set_GridColor(const Value: TColor);
-    procedure set_GutterColor(const Value: TColor);
-    procedure set_GutterEdgeColor(const Value: TColor);
-    procedure set_GutterWidth(const Value: Integer);
-    procedure set_HighlightColor(const Value: TColor);
-    function get_ItemRect(Index: Integer): TRect;
-    procedure set_NameColor(const Value: TColor);
-    procedure set_NonDefaultValueColor(const Value: TColor);
-    function get_PlusMinBtnRect(Index: Integer): TRect;
-    function get_PropTextRect(Index: Integer): TRect;
-    procedure set_ReadOnlyColor(const Value: TColor);
-    procedure set_ReferencesColor(const Value: TColor);
-    function get_SelectedItem: PwxPropertyItem;
-    procedure set_ShowGridLines(const Value: Boolean);
-    procedure set_ShowGutter(const Value: Boolean);
-    procedure set_SubPropertiesColor(const Value: TColor);
-    procedure set_ValueColor(const Value: TColor);
-    function get_ValueRect(Index: Integer): TRect;
-    function get_ValueTextRect(Index: Integer): TRect;
+    procedure Set_AllowSearch(const Value: Boolean);
+    procedure Set_BoldNonDefaultValue(const Value: Boolean);
+    function Get_ExtraRect(Index: Integer): TRect;
+    procedure Set_GridColor(const Value: TColor);
+    procedure Set_GutterColor(const Value: TColor);
+    procedure Set_GutterEdgeColor(const Value: TColor);
+    procedure Set_GutterWidth(const Value: Integer);
+    procedure Set_HighlightColor(const Value: TColor);
+    function Get_ItemRect(Index: Integer): TRect;
+    procedure Set_NameColor(const Value: TColor);
+    procedure Set_NonDefaultValueColor(const Value: TColor);
+    function Get_PlusMinBtnRect(Index: Integer): TRect;
+    function Get_PropTextRect(Index: Integer): TRect;
+    procedure Set_ReadOnlyColor(const Value: TColor);
+    procedure Set_ReferencesColor(const Value: TColor);
+    function Get_SelectedItem: PwxPropertyItem;
+    procedure Set_ShowGridLines(const Value: Boolean);
+    procedure Set_ShowGutter(const Value: Boolean);
+    procedure Set_SubPropertiesColor(const Value: TColor);
+    procedure Set_ValueColor(const Value: TColor);
+    function Get_ValueRect(Index: Integer): TRect;
+    function Get_ValueTextRect(Index: Integer): TRect;
     {$ENDREGION}
   private
     procedure CMHintShow(var AMessage: TCMHintShow); message CM_HINTSHOW;
@@ -1262,33 +1262,33 @@ type
 
     procedure UpdateProperties(const Repaint: Boolean = False); override;
 
-    property AllowSearch: Boolean read FAllowSearch write set_AllowSearch;
+    property AllowSearch: Boolean read FAllowSearch write Set_AllowSearch;
     property AutoCompleteText: Boolean read FAutoCompleteText write FAutoCompleteText;
-    property BoldNonDefaultValue: Boolean read FBoldNonDefaultValue write set_BoldNonDefaultValue;
+    property BoldNonDefaultValue: Boolean read FBoldNonDefaultValue write Set_BoldNonDefaultValue;
     property ClickTime: Integer read FClickTime write FClickTime;
-    property ExtraRect[Index: Integer]: TRect read get_ExtraRect;
-    property GridColor: TColor read FGridColor write set_GridColor;
-    property GutterColor: TColor read FGutterColor write set_GutterColor;
-    property GutterEdgeColor: TColor read FGutterEdgeColor write set_GutterEdgeColor;
-    property GutterWidth: Integer read FGutterWidth write set_GutterWidth;
-    property HighlightColor: TColor read FHighlightColor write set_HighlightColor;
-    property ItemRect[Index: Integer]: TRect read get_ItemRect;
-    property NameColor: TColor read FNameColor write set_NameColor;
-    property NonDefaultValueColor: TColor read FNonDefaultValueColor write set_NonDefaultValueColor;
-    property PlusMinBtnRect[Index: Integer]: TRect read get_PlusMinBtnRect;
-    property PropTextRect[Index: Integer]: TRect read get_PropTextRect;
-    property ReadOnlyColor: TColor read FReadOnlyColor write set_ReadOnlyColor;
-    property ReferencesColor: TColor read FReferencesColor write set_ReferencesColor;
+    property ExtraRect[Index: Integer]: TRect read Get_ExtraRect;
+    property GridColor: TColor read FGridColor write Set_GridColor;
+    property GutterColor: TColor read FGutterColor write Set_GutterColor;
+    property GutterEdgeColor: TColor read FGutterEdgeColor write Set_GutterEdgeColor;
+    property GutterWidth: Integer read FGutterWidth write Set_GutterWidth;
+    property HighlightColor: TColor read FHighlightColor write Set_HighlightColor;
+    property ItemRect[Index: Integer]: TRect read Get_ItemRect;
+    property NameColor: TColor read FNameColor write Set_NameColor;
+    property NonDefaultValueColor: TColor read FNonDefaultValueColor write Set_NonDefaultValueColor;
+    property PlusMinBtnRect[Index: Integer]: TRect read Get_PlusMinBtnRect;
+    property PropTextRect[Index: Integer]: TRect read Get_PropTextRect;
+    property ReadOnlyColor: TColor read FReadOnlyColor write Set_ReadOnlyColor;
+    property ReferencesColor: TColor read FReferencesColor write Set_ReferencesColor;
     property SelectedIndex: Integer read FSelectedIndex;
-    property SelectedItem: PwxPropertyItem read get_SelectedItem;
-    property ShowGridLines: Boolean read FShowGridLines write set_ShowGridLines;
-    property ShowGutter: Boolean read FShowGutter write set_ShowGutter;
+    property SelectedItem: PwxPropertyItem read Get_SelectedItem;
+    property ShowGridLines: Boolean read FShowGridLines write Set_ShowGridLines;
+    property ShowGutter: Boolean read FShowGutter write Set_ShowGutter;
     property ShowItemHint: Boolean read FShowItemHint write FShowItemHint;
-    property SubPropertiesColor: TColor read FSubPropertiesColor write set_SubPropertiesColor;
+    property SubPropertiesColor: TColor read FSubPropertiesColor write Set_SubPropertiesColor;
     property TrackChange: Boolean read FTrackChange write FTrackChange;
-    property ValueColor: TColor read FValueColor write set_ValueColor;
-    property ValueRect[Index: Integer]: TRect read get_ValueRect;
-    property ValueTextRect[Index: Integer]: TRect read get_ValueTextRect;
+    property ValueColor: TColor read FValueColor write Set_ValueColor;
+    property ValueRect[Index: Integer]: TRect read Get_ValueRect;
+    property ValueTextRect[Index: Integer]: TRect read Get_ValueTextRect;
     property OnCollapseItem: TzPropertyItemEvent read FOnCollapseItem write FOnCollapseItem;
     property OnExpandItem: TzPropertyItemEvent read FOnExpandItem write FOnExpandItem;
     property OnGetItemFriendlyName: TzPropertyItemGetFriendlyNameEvent read FOnGetItemFriendlyName write FOnGetItemFriendlyName;
@@ -1441,12 +1441,12 @@ begin
     ShowWindow(Self.Handle, SW_HIDE);
 end;
 
-procedure TwxObjectInspectorListBox.set_Item(const AValue: Pointer);
+procedure TwxObjectInspectorListBox.Set_Item(const AValue: Pointer);
 begin
   FItem := AValue;
 end;
 
-procedure TwxObjectInspectorListBox.set_ItemEdit(const AValue: TCustomEdit);
+procedure TwxObjectInspectorListBox.Set_ItemEdit(const AValue: TCustomEdit);
 begin
   FItemEdit := AValue;
 end;
@@ -1595,7 +1595,7 @@ begin
   );
 end;
 
-function TwxCursorListBox.get_Cursor(AIndex: Integer): TCursor;
+function TwxCursorListBox.Get_Cursor(AIndex: Integer): TCursor;
 begin
   Result := TCursor(Items.Objects[AIndex]);
 end;
@@ -1652,7 +1652,7 @@ begin
   AddShortCut(scShift + scAlt + vkBack); // Shift+Alt+BkSp
 end;
 
-function TwxShortcutListBox.get_ShortCut(AIndex: Integer): TShortCut;
+function TwxShortcutListBox.Get_ShortCut(AIndex: Integer): TShortCut;
 begin
   Result := TShortCut(Items.Objects[AIndex]);
 end;
@@ -1724,12 +1724,12 @@ begin
   end;
 end;
 
-class procedure TwxObjectInspectorButton.set_ScaledArrowSize(const AValue: Integer);
+class procedure TwxObjectInspectorButton.Set_ScaledArrowSize(const AValue: Integer);
 begin
   FScaledArrowSize := AValue;
 end;
 
-class procedure TwxObjectInspectorButton.set_ScaledWidth(const AValue: Integer);
+class procedure TwxObjectInspectorButton.Set_ScaledWidth(const AValue: Integer);
 begin
   FScaledWidth := AValue;
 end;
@@ -1897,12 +1897,12 @@ begin
   FDefaultSelectedIndex := FListBox.ItemIndex;
 end;
 
-function TwxObjectInspectorEdit.get_ListBox: TwxObjectInspectorListBox;
+function TwxObjectInspectorEdit.Get_ListBox: TwxObjectInspectorListBox;
 begin
   Result := FListBox;
 end;
 
-function TwxObjectInspectorEdit.get_PropertyItem: PwxPropertyItem;
+function TwxObjectInspectorEdit.Get_PropertyItem: PwxPropertyItem;
 begin
   Result := FPropertyItem;
 end;
@@ -2008,7 +2008,7 @@ begin
   InitList;
 end;
 
-procedure TwxObjectInspectorEdit.set_PropertyItem(const AItem: PwxPropertyItem);
+procedure TwxObjectInspectorEdit.Set_PropertyItem(const AItem: PwxPropertyItem);
 begin
   if not FPropertyItem.EqualTo(AItem) then begin
     FPropertyItem := AItem;
@@ -2350,42 +2350,42 @@ begin
   Result := @Self = AItemToCompare;
 end;
 
-function TwxPropertyItem.get_AssociatedComponentParentForm: TCustomForm;
+function TwxPropertyItem.Get_AssociatedComponentParentForm: TCustomForm;
 begin
   Result := GetComponentParentForm(Component);
 end;
 
-function TwxPropertyItem.get_AssociatedProperty: TRttiProperty;
+function TwxPropertyItem.Get_AssociatedProperty: TRttiProperty;
 begin
   Result := FAssociatedProperty;
 end;
 
-procedure TwxPropertyItem.set_AssociatedProperty(const AValue: TRttiProperty);
+procedure TwxPropertyItem.Set_AssociatedProperty(const AValue: TRttiProperty);
 begin
   FAssociatedProperty := AValue;
 end;
 
-function TwxPropertyItem.get_CategoryIndex: Integer;
+function TwxPropertyItem.Get_CategoryIndex: Integer;
 begin
   Result := FCategoryIndex;
 end;
 
-procedure TwxPropertyItem.set_CategoryIndex(const AValue: Integer);
+procedure TwxPropertyItem.Set_CategoryIndex(const AValue: Integer);
 begin
   FCategoryIndex := AValue;
 end;
 
-function TwxPropertyItem.get_CategoryName: string;
+function TwxPropertyItem.Get_CategoryName: string;
 begin
   Result := FCategoryName;
 end;
 
-procedure TwxPropertyItem.set_CategoryName(const AValue: string);
+procedure TwxPropertyItem.Set_CategoryName(const AValue: string);
 begin
   FCategoryName := AValue;
 end;
 
-function TwxPropertyItem.get_ChildCount: Integer;
+function TwxPropertyItem.Get_ChildCount: Integer;
 var
   selfPos, I: Integer;
 begin
@@ -2418,7 +2418,7 @@ begin
   end;
 end;
 
-function TwxPropertyItem.get_ChildItems(const AIndex: Integer): PwxPropertyItem;
+function TwxPropertyItem.Get_ChildItems(const AIndex: Integer): PwxPropertyItem;
 var
   childList: TList;
   selfPos, I: Integer;
@@ -2454,17 +2454,17 @@ begin
   end;
 end;
 
-function TwxPropertyItem.get_Component: TObject;
+function TwxPropertyItem.Get_Component: TObject;
 begin
   Result := FComponent;
 end;
 
-procedure TwxPropertyItem.set_Component(const AValue: TObject);
+procedure TwxPropertyItem.Set_Component(const AValue: TObject);
 begin
   FComponent := AValue;
 end;
 
-function TwxPropertyItem.get_Expanded: Boolean;
+function TwxPropertyItem.Get_Expanded: Boolean;
 begin
   CheckOwnerList;
   Result := ChildCount > 0;
@@ -2472,12 +2472,12 @@ begin
   if Result then Result := ChildItems[0].Visible;
 end;
 
-procedure TwxPropertyItem.set_FloatPreference(const AValue: TwxFloatPreference);
+procedure TwxPropertyItem.Set_FloatPreference(const AValue: TwxFloatPreference);
 begin
   FFloatPreference := AValue;
 end;
 
-function TwxPropertyItem.get_HasChild: Boolean;
+function TwxPropertyItem.Get_HasChild: Boolean;
 begin
   if IsCategory then
     Exit(True);
@@ -2491,27 +2491,27 @@ begin
     Result := ObjectHasAtLeastOneChild(Value.AsObject, ObjectVisibility);
 end;
 
-function TwxPropertyItem.get_Instance: TObject;
+function TwxPropertyItem.Get_Instance: TObject;
 begin
   Result := FInstance;
 end;
 
-procedure TwxPropertyItem.set_Instance(const AValue: TObject);
+procedure TwxPropertyItem.Set_Instance(const AValue: TObject);
 begin
   FInstance := AValue;
 end;
 
-function TwxPropertyItem.get_IsCategory: Boolean;
+function TwxPropertyItem.Get_IsCategory: Boolean;
 begin
   Result := FIsCategory;
 end;
 
-procedure TwxPropertyItem.SetIsCategory(const AValue: Boolean);
+procedure TwxPropertyItem.Set_IsCategory(const AValue: Boolean);
 begin
   FIsCategory := AValue;
 end;
 
-function TwxPropertyItem.get_IsClass: Boolean;
+function TwxPropertyItem.Get_IsClass: Boolean;
 begin
   if (not Assigned(AssociatedProperty)) or (IsCategory) then
     Exit(False);
@@ -2519,7 +2519,7 @@ begin
   Result := AssociatedProperty.PropertyType.TypeKind = tkClass;
 end;
 
-function TwxPropertyItem.get_IsComponent: Boolean;
+function TwxPropertyItem.Get_IsComponent: Boolean;
 begin
   if (not Assigned(AssociatedProperty)) or (IsCategory) then
     Exit(False);
@@ -2528,7 +2528,7 @@ begin
     IsClassDerivedFromClass(TRttiInstanceType(AssociatedProperty.PropertyType).MetaclassType, TComponent);
 end;
 
-function TwxPropertyItem.get_IsEmpty: Boolean;
+function TwxPropertyItem.Get_IsEmpty: Boolean;
 var
   emptyItem: TwxPropertyItem;
 begin
@@ -2536,7 +2536,7 @@ begin
   Result := CompareMem(@Self, @emptyItem, SizeOf(TwxPropertyItem));
 end;
 
-function TwxPropertyItem.get_IsEnum: Boolean;
+function TwxPropertyItem.Get_IsEnum: Boolean;
 begin
   if (not Assigned(AssociatedProperty)) or (IsCategory) then
     Exit(False);
@@ -2544,7 +2544,7 @@ begin
   Result := AssociatedProperty.PropertyType.TypeKind = tkEnumeration;
 end;
 
-function TwxPropertyItem.get_IsSet: Boolean;
+function TwxPropertyItem.Get_IsSet: Boolean;
 begin
   if (not Assigned(AssociatedProperty)) or (IsCategory) then
     Exit(False);
@@ -2552,7 +2552,7 @@ begin
   Result := (AssociatedProperty.PropertyType.TypeKind = tkSet) and (SetElementValue = - 1);
 end;
 
-function TwxPropertyItem.get_IsSetElement: Boolean;
+function TwxPropertyItem.Get_IsSetElement: Boolean;
 begin
   if (not Assigned(AssociatedProperty)) or (IsCategory) then
     Exit(False);
@@ -2560,65 +2560,65 @@ begin
   Result := (AssociatedProperty.PropertyType.TypeKind = tkSet) and (SetElementValue > - 1);
 end;
 
-function TwxPropertyItem.get_MayHaveChild: Boolean;
+function TwxPropertyItem.Get_MayHaveChild: Boolean;
 begin
   Result := IsCategory or IsClass or IsSet;
 end;
 
-function TwxPropertyItem.get_Name: string;
+function TwxPropertyItem.Get_Name: string;
 begin
   if IsCategory then begin
     Result := CategoryName;
     Exit;
   end;
 
-  if get_IsSetElement then
+  if Get_IsSetElement then
     Result := GetEnumName(AssociatedProperty.PropertyType.AsSet.ElementType.Handle, SetElementValue)
   else
     Result := AssociatedProperty.Name;
 end;
 
-function TwxPropertyItem.get_ObjectVisibility: TMemberVisibility;
+function TwxPropertyItem.Get_ObjectVisibility: TMemberVisibility;
 begin
   Result := FObjectVisibility;
 end;
 
-procedure TwxPropertyItem.set_ObjectVisibility(const AValue: TMemberVisibility);
+procedure TwxPropertyItem.Set_ObjectVisibility(const AValue: TMemberVisibility);
 begin
   FObjectVisibility := AValue;
 end;
 
-function TwxPropertyItem.get_Parent: PwxPropertyItem;
+function TwxPropertyItem.Get_Parent: PwxPropertyItem;
 begin
   Result := FParent;
 end;
 
-procedure TwxPropertyItem.set_Parent(const AValue: PwxPropertyItem);
+procedure TwxPropertyItem.Set_Parent(const AValue: PwxPropertyItem);
 begin
   FParent := AValue;
 end;
 
-function TwxPropertyItem.get_QualifiedName: string;
+function TwxPropertyItem.Get_QualifiedName: string;
 begin
   Result := FQualifiedName;
 end;
 
-procedure TwxPropertyItem.set_QualifiedName(const AValue: string);
+procedure TwxPropertyItem.Set_QualifiedName(const AValue: string);
 begin
   FQualifiedName := AValue;
 end;
 
-function TwxPropertyItem.get_SetElementValue: Integer;
+function TwxPropertyItem.Get_SetElementValue: Integer;
 begin
   Result := FSetElementValue;
 end;
 
-procedure TwxPropertyItem.set_SetElementValue(const AValue: Integer);
+procedure TwxPropertyItem.Set_SetElementValue(const AValue: Integer);
 begin
   FSetElementValue := AValue;
 end;
 
-function TwxPropertyItem.get_Value: TValue;
+function TwxPropertyItem.Get_Value: TValue;
 begin
   Result := TValue.Empty;
 
@@ -2629,7 +2629,7 @@ begin
     Result := AssociatedProperty.GetValue(Instance);
 end;
 
-function TwxPropertyItem.get_ValueAsString: String;
+function TwxPropertyItem.Get_ValueAsString: string;
 var
   obj: TObject;
 begin
@@ -2699,17 +2699,22 @@ begin
   end;
 end;
 
-function TwxPropertyItem.get_Visible: Boolean;
+function TwxPropertyItem.Get_Visible: Boolean;
 begin
   Result := FVisible;
 end;
 
-procedure TwxPropertyItem.set_Visible(const AValue: Boolean);
+procedure TwxPropertyItem.Set_OwnerList(const AValue: TwxPropertyItemList);
+begin
+  FOwnerList := AValue;
+end;
+
+procedure TwxPropertyItem.Set_Visible(const AValue: Boolean);
 begin
   FVisible := AValue;
 end;
 
-function TwxPropertyItemList.IndexOfQualifiedName(AQualifiedName: String): Integer;
+function TwxPropertyItemList.IndexOfQualifiedName(AQualifiedName: string): Integer;
 var
   I: Integer;
 begin
@@ -2734,12 +2739,6 @@ end;
 constructor TwxCanvasStack.Create;
 begin
   inherited Create;
-  FObjectsStack := TStack<ICanvasObjectsStore>.Create;
-end;
-
-constructor TwxCanvasStack.Create(const ACollection: TEnumerable<TCanvas>);
-begin
-  inherited Create(ACollection);
   FObjectsStack := TStack<ICanvasObjectsStore>.Create;
 end;
 
@@ -2839,19 +2838,19 @@ var
   var
     lfProp: TRttiProperty;
   begin
+    for lfProp in APropArray do begin
+      if lfProp.Name = AProp.Name then Exit(True);
+    end;
+
     Result := False;
-    for lfProp in APropArray do
-      if lfProp.Name = AProp.Name then
-        Exit(True);
   end;
 {$ENDREGION}
 begin
   Result := GetDeclaredProperties;
   propArray := GetProperties;
 
-  for prop in propArray do
-  begin
-    if Assigned(prop) and (not Contains(Result, prop)) then begin
+  for prop in propArray do begin
+    if not Contains(Result, prop) then begin
       propArrayLen := Length(Result) + 1;
       SetLength(Result, propArrayLen);
       Result[propArrayLen - 1] := prop;
@@ -2950,7 +2949,7 @@ begin
   Result := PT(nil);
 
   if Count > 0 then
-    Result := get_Item(0);
+    Result := Get_Item(0);
 end;
 
 function TwxRecordList<T, PT>.Last: PT;
@@ -2958,7 +2957,7 @@ begin
   Result := PT(nil);
 
   if Count > 0 then
-    Result := get_Item(Count - 1);
+    Result := Get_Item(Count - 1);
 end;
 
 function TwxRecordList<T, PT>.PointerToPT(APointer: Pointer): PT;
@@ -2990,7 +2989,7 @@ begin
   end;
 end;
 
-function TwxRecordList<T, PT>.get_Item(const AIndex: Integer): PT;
+function TwxRecordList<T, PT>.Get_Item(const AIndex: Integer): PT;
 begin
   if (AIndex < 0) or (AIndex >= Count) then
     raise EArgumentOutOfRangeException.CreateRes(@SArgumentOutOfRange);
@@ -2998,7 +2997,7 @@ begin
   Result := PointerToPT(FRecPtrList.Items[AIndex]);
 end;
 
-function TwxRecordList<T, PT>.get_Count: Integer;
+function TwxRecordList<T, PT>.Get_Count: Integer;
 begin
   Result := FRecPtrList.Count;
 end;
@@ -3331,7 +3330,7 @@ begin
   inherited;
 end;
 
-procedure TwxAbstractObjectInspector.set_BorderStyle(const Value: TBorderStyle);
+procedure TwxAbstractObjectInspector.Set_BorderStyle(const Value: TBorderStyle);
 begin
   if FBorderStyle <> Value then begin
     FBorderStyle := Value;
@@ -3339,7 +3338,7 @@ begin
   end;
 end;
 
-procedure TwxAbstractObjectInspector.set_Component(AValue: TObject);
+procedure TwxAbstractObjectInspector.Set_Component(AValue: TObject);
 begin
   if AValue <> FComponent then begin
     FIsSettingComponent := True;
@@ -3355,17 +3354,17 @@ begin
   end;
 end;
 
-function TwxAbstractObjectInspector.get_FloatPreference: TwxFloatPreference;
+function TwxAbstractObjectInspector.Get_FloatPreference: TwxFloatPreference;
 begin
   Result := FFloatPreference;
 end;
 
-function TwxCustomControl.get_IsMouseDown: Boolean;
+function TwxCustomControl.Get_IsMouseDown: Boolean;
 begin
   Result := FIsMouseLButtonDown;
 end;
 
-function TwxCustomControl.get_IsMouseInControl: Boolean;
+function TwxCustomControl.Get_IsMouseInControl: Boolean;
 var
   screenPos, clientPos: TPoint;
 begin
@@ -3374,12 +3373,12 @@ begin
   Result := ClientRect.Contains(clientPos);
 end;
 
-function TwxCustomControl.get_IsVclStyleUsed: Boolean;
+function TwxCustomControl.Get_IsVclStyleUsed: Boolean;
 begin
   Result := StyleServices.Enabled and not StyleServices.IsSystemStyle;
 end;
 
-procedure TwxAbstractObjectInspector.set_ObjectVisibility(const AValue: TMemberVisibility);
+procedure TwxAbstractObjectInspector.Set_ObjectVisibility(const AValue: TMemberVisibility);
 begin
   if AValue >= mvPublic then
     FObjectVisibility := AValue
@@ -3387,7 +3386,7 @@ begin
     raise EInvalidObjectVisibility.Create;
 end;
 
-procedure TwxAbstractObjectInspector.set_SortByCategory(const AValue: Boolean);
+procedure TwxAbstractObjectInspector.Set_SortByCategory(const AValue: Boolean);
 begin
   if FSortByCategory <> AValue then begin
     FSortByCategory := AValue;
@@ -3395,17 +3394,17 @@ begin
   end;
 end;
 
-function TwxCustomControl.get_UseStyleBorder: Boolean;
+function TwxCustomControl.Get_UseStyleBorder: Boolean;
 begin
   Result := IsVclStyleUsed and (seBorder in StyleElements);
 end;
 
-function TwxCustomControl.get_UseStyleColor: Boolean;
+function TwxCustomControl.Get_UseStyleColor: Boolean;
 begin
   Result := IsVclStyleUsed and (seClient in StyleElements);
 end;
 
-function TwxCustomControl.get_UseStyleFont: Boolean;
+function TwxCustomControl.Get_UseStyleFont: Boolean;
 begin
   Result := IsVclStyleUsed and (seFont in StyleElements);
 end;
@@ -3721,7 +3720,7 @@ begin
   end;
 end;
 
-procedure TwxSplitteredObjectInspector.set_SplitterColor(const AValue: TColor);
+procedure TwxSplitteredObjectInspector.Set_SplitterColor(const AValue: TColor);
 begin
   if AValue <> FSplitterColor then begin
     FSplitterColor := AValue;
@@ -3729,7 +3728,7 @@ begin
   end;
 end;
 
-procedure TwxSplitteredObjectInspector.set_SplitterPos(const AValue: Integer);
+procedure TwxSplitteredObjectInspector.Set_SplitterPos(const AValue: Integer);
 const
   cSplitterPosMargin = 10;
 begin
@@ -3739,7 +3738,7 @@ begin
   end;
 end;
 
-function TwxSplitteredObjectInspector.get_SplitterRect: TRect;
+function TwxSplitteredObjectInspector.Get_SplitterRect: TRect;
 const
   cSplitterRectMargin = 5;
 begin
@@ -3859,12 +3858,12 @@ begin
   end;
 end;
 
-function TwxHeaderedObjectInspector.get_HeaderPropRect: TRect;
+function TwxHeaderedObjectInspector.Get_HeaderPropRect: TRect;
 begin
   Result := Rect(0, 0, SplitterPos, HeaderRect.Height);
 end;
 
-procedure TwxHeaderedObjectInspector.set_HeaderPropText(const AValue: string);
+procedure TwxHeaderedObjectInspector.Set_HeaderPropText(const AValue: string);
 begin
   if FHeaderPropText <> AValue then begin
     FHeaderPropText := AValue;
@@ -3872,17 +3871,17 @@ begin
   end;
 end;
 
-function TwxHeaderedObjectInspector.get_HeaderRect: TRect;
+function TwxHeaderedObjectInspector.Get_HeaderRect: TRect;
 begin
   Result := Rect(0, 0, Width, ItemHeight + (ItemHeight div 2));
 end;
 
-function TwxHeaderedObjectInspector.get_HeaderValueRect: TRect;
+function TwxHeaderedObjectInspector.Get_HeaderValueRect: TRect;
 begin
   Result := Rect(SplitterPos, 0, Width, HeaderRect.Height);
 end;
 
-procedure TwxHeaderedObjectInspector.set_HeaderValueText(const AValue: string);
+procedure TwxHeaderedObjectInspector.Set_HeaderValueText(const AValue: string);
 begin
   if FHeaderValueText <> AValue then begin
     FHeaderValueText := AValue;
@@ -3890,7 +3889,7 @@ begin
   end;
 end;
 
-procedure TwxHeaderedObjectInspector.set_ShowHeader(const AValue: Boolean);
+procedure TwxHeaderedObjectInspector.Set_ShowHeader(const AValue: Boolean);
 begin
   if FShowHeader <> AValue then begin
     FShowHeader := AValue;
@@ -4208,7 +4207,7 @@ begin
   UpdateScrollBar;
 end;
 
-function TwxScrollableObjectInspector.get_VisiblePropCount: Integer;
+function TwxScrollableObjectInspector.Get_VisiblePropCount: Integer;
 begin
   Result := VisibleItems.Count;
 end;
@@ -5368,14 +5367,14 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_AllowSearch(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_AllowSearch(const Value: Boolean);
 begin
   if FAllowSearch <> Value then begin
     FAllowSearch := Value;
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_BoldNonDefaultValue(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_BoldNonDefaultValue(const Value: Boolean);
 begin
   if Value <> FBoldNonDefaultValue then begin
     FBoldNonDefaultValue := Value;
@@ -5383,7 +5382,7 @@ begin
   end;
 end;
 
-function TwxCustomObjectInspector.get_ExtraRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ExtraRect(Index: Integer): TRect;
 var
   w: Integer;
   PItem: PwxPropertyItem;
@@ -5403,7 +5402,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_GridColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_GridColor(const Value: TColor);
 begin
   if FGridColor <> Value then begin
     FGridColor := Value;
@@ -5411,7 +5410,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_GutterColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_GutterColor(const Value: TColor);
 begin
   if Value <> FGutterColor then begin
     FGutterColor := Value;
@@ -5419,7 +5418,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_GutterEdgeColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_GutterEdgeColor(const Value: TColor);
 begin
   if Value <> FGutterEdgeColor then begin
     FGutterEdgeColor := Value;
@@ -5427,7 +5426,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_GutterWidth(const Value: Integer);
+procedure TwxCustomObjectInspector.Set_GutterWidth(const Value: Integer);
 begin
   if Value > ValueManager.MaximumGutterWidth then
     raise EInvalidGutterWidth.Create;
@@ -5438,7 +5437,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_HighlightColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_HighlightColor(const Value: TColor);
 begin
   if Value <> FHighlightColor then begin
     FHighlightColor := Value;
@@ -5446,7 +5445,7 @@ begin
   end;
 end;
 
-function TwxCustomObjectInspector.get_ItemRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ItemRect(Index: Integer): TRect;
 var
   vIndex, Y: Integer;
 begin
@@ -5459,7 +5458,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_NameColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_NameColor(const Value: TColor);
 begin
   if Value <> FNameColor then begin
     FNameColor := Value;
@@ -5467,7 +5466,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_NonDefaultValueColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_NonDefaultValueColor(const Value: TColor);
 begin
   if Value <> FNonDefaultValueColor then begin
     FNonDefaultValueColor := Value;
@@ -5475,7 +5474,7 @@ begin
   end;
 end;
 
-function TwxCustomObjectInspector.get_PlusMinBtnRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_PlusMinBtnRect(Index: Integer): TRect;
 var
   X, Y: Integer;
   pOrdPos, POrd: Integer;
@@ -5492,14 +5491,14 @@ begin
   Result := Rect(X, cY, X + ValueManager.MinimumPlusSignWidth, cY + ValueManager.MinimumPlusSignWidth);
 end;
 
-function TwxCustomObjectInspector.get_PropTextRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_PropTextRect(Index: Integer): TRect;
 begin
   Result := ItemRect[Index];
   Result.Left := (ItemOrder(VisibleItems[Index]) * FGutterWidth) + FGutterWidth + FSepTxtDis;
   Result.Right := SplitterPos;
 end;
 
-procedure TwxCustomObjectInspector.set_ReadOnlyColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_ReadOnlyColor(const Value: TColor);
 begin
   if FReadOnlyColor <> Value then begin
     FReadOnlyColor := Value;
@@ -5507,7 +5506,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_ReferencesColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_ReferencesColor(const Value: TColor);
 begin
   if Value <> FReferencesColor then begin
     FReferencesColor := Value;
@@ -5515,7 +5514,7 @@ begin
   end;
 end;
 
-function TwxCustomObjectInspector.get_SelectedItem: PwxPropertyItem;
+function TwxCustomObjectInspector.Get_SelectedItem: PwxPropertyItem;
 var
   L: Integer;
 begin
@@ -5529,7 +5528,7 @@ begin
     Result := Items.Items[L];
 end;
 
-procedure TwxCustomObjectInspector.set_ShowGridLines(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_ShowGridLines(const Value: Boolean);
 begin
   if Value <> FShowGridLines then begin
     FShowGridLines := Value;
@@ -5537,7 +5536,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_ShowGutter(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_ShowGutter(const Value: Boolean);
 begin
   if Value <> FShowGutter then begin
     FShowGutter := Value;
@@ -5545,7 +5544,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_SubPropertiesColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_SubPropertiesColor(const Value: TColor);
 begin
   if Value <> FSubPropertiesColor then begin
     FSubPropertiesColor := Value;
@@ -5553,7 +5552,7 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.set_ValueColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_ValueColor(const Value: TColor);
 begin
   if Value <> FValueColor then begin
     FValueColor := Value;
@@ -5561,7 +5560,7 @@ begin
   end;
 end;
 
-function TwxCustomObjectInspector.get_ValueRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ValueRect(Index: Integer): TRect;
 var
   vIndex, Y: Integer;
 begin
@@ -5574,7 +5573,7 @@ begin
   end;
 end;
 
-function TwxCustomObjectInspector.get_ValueTextRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ValueTextRect(Index: Integer): TRect;
 var
   w: Integer;
 begin
