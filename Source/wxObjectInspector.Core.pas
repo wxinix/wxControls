@@ -1173,7 +1173,7 @@ type
     FSelItem: TwxPropertyItem;
     FSepTxtDis: Integer;
     FShowGridLines: Boolean;
-    FShowGutter: Boolean;
+    FShowGutterEdge: Boolean;
     FShowItemHint: Boolean;
     FSubPropertiesColor: TColor;
     FTrackChange: Boolean;
@@ -1198,7 +1198,7 @@ type
     procedure Set_ReferencesColor(const AValue: TColor);
     function Get_SelectedItem: PwxPropertyItem;
     procedure Set_ShowGridLines(const AValue: Boolean);
-    procedure Set_ShowGutter(const AValue: Boolean);
+    procedure Set_ShowGutterEdge(const AValue: Boolean);
     procedure Set_SubPropertiesColor(const AValue: TColor);
     procedure Set_ValueColor(const AValue: TColor);
     function Get_ValueRect(AIndex: Integer): TRect;
@@ -1282,7 +1282,7 @@ type
     property SelectedIndex: Integer read FSelectedIndex;
     property SelectedItem: PwxPropertyItem read Get_SelectedItem;
     property ShowGridLines: Boolean read FShowGridLines write Set_ShowGridLines;
-    property ShowGutter: Boolean read FShowGutter write Set_ShowGutter;
+    property ShowGutterEdge: Boolean read FShowGutterEdge write Set_ShowGutterEdge;
     property ShowItemHint: Boolean read FShowItemHint write FShowItemHint;
     property SubPropertiesColor: TColor read FSubPropertiesColor write Set_SubPropertiesColor;
     property TrackChange: Boolean read FTrackChange write FTrackChange;
@@ -1361,7 +1361,7 @@ type
     property ReadOnlyColor;
     property ReferencesColor;
     property ShowGridLines;
-    property ShowGutter;
+    property ShowGutterEdge;
     property ShowHeader;
     property ShowItemHint;
     property SortByCategory;
@@ -3700,7 +3700,7 @@ begin
   ACanvas.Refresh;
   color := FSplitterColor;
 
-  if UseStyleColor then
+  if UseStyleColor and not (csDesigning in ComponentState) then
     color := StyleServices.GetStyleColor(scSplitter);
 
   ACanvas.Pen.Color := color;
@@ -3833,7 +3833,8 @@ end;
 
 procedure TwxHeaderedObjectInspector.Paint;
 begin
-  if FShowHeader then PaintHeader;
+  if FShowHeader then
+    PaintHeader;
   inherited;
 end;
 
@@ -4072,14 +4073,14 @@ end;
 procedure TwxScrollableObjectInspector.Paint;
 var
   I: Integer;
-  FirstItem: Integer;
-  LastItem: Integer;
+  firstItem: Integer;
+  lastItem: Integer;
 begin
   PaintBackground(Canvas);
-  FirstItem := FirstItemIndex;
-  LastItem := LastItemIndex;
+  firstItem := FirstItemIndex;
+  lastItem := LastItemIndex;
 
-  for I := FirstItem to LastItem do
+  for I := firstItem to lastItem do
   begin
     CanvasStack.Push(Canvas);
     PaintItem(i);
@@ -4096,7 +4097,7 @@ begin
   ACanvas.Refresh;
   LColor := Color;
 
-  if UseStyleColor then
+  if UseStyleColor and not (csDesigning in ComponentState) then
     LColor := StyleServices.GetStyleColor(scWindow);
 
   ACanvas.Brush.Color := LColor;
@@ -4309,7 +4310,7 @@ begin
   inherited;
 
   if csDesigning in ComponentState then
-    Component := Self;
+    Component := nil;
 
   FUnRegisterKeys := False;
   FAllowSearch := True;
@@ -4326,7 +4327,7 @@ begin
   FSelItem := TwxPropertyItem.Empty;
   ParentBackground := False;
   DoubleBuffered := True;
-  FShowGutter := True;
+  FShowGutterEdge := True;
   FGutterWidth := 12;
   FNameColor := clBtnText;
   FGutterColor := clCream;
@@ -4391,7 +4392,7 @@ begin
     ValueManager.MinimumPlusSignWidth := MulDiv(10, M, D);
     ValueManager.ScaledColorRectWidth := MulDiv(ValueManager.DefaultColorRectWidth, M, D);
 
-    TwxObjectInspectorButton.ScaledWidth     := MulDiv(TwxObjectInspectorButton.DefaultWidth, M, D);
+    TwxObjectInspectorButton.ScaledWidth := MulDiv(TwxObjectInspectorButton.DefaultWidth, M, D);
     TwxObjectInspectorButton.ScaledArrowSize := MulDiv(TwxObjectInspectorButton.DefaultArrowSize, M, D);
 
     FSepTxtDis := MulDiv(FSepTxtDis, M, D);
@@ -4987,7 +4988,7 @@ var
   xMax, xMin: Integer;
   hasPlusMinus: Boolean;
   savedColor: TColor;
-  lolor: TColor;
+  color: TColor;
   horzDotLeft: Integer;
 begin
 
@@ -5010,12 +5011,12 @@ begin
 
   { Background color => will be used to paint property text . }
   savedColor := Canvas.Brush.Color;
-  lolor := FGutterColor;
+  color := FGutterColor;
 
-  if UseStyleColor then
-    lolor := StyleServices.GetSystemColor(clBtnHighlight);
+  if UseStyleColor and not (csDesigning in ComponentState) then
+    color := StyleServices.GetSystemColor(clBtnHighlight);
 
-  Canvas.Brush.Color := lolor;
+  Canvas.Brush.Color := color;
   Canvas.FillRect(r);
   pmR := PlusMinBtnRect[AIndex];
 
@@ -5059,12 +5060,12 @@ begin
     if FSelectedIndex = AIndex then
     begin
       r := Rect(pOrdPos + 1, Y + 1, SplitterPos, Y + ItemHeight);
-      lolor := FHighlightColor;
+      color := FHighlightColor;
 
       if UseStyleColor then
-        lolor := StyleServices.GetSystemColor(clHighlight);
+        color := StyleServices.GetSystemColor(clHighlight);
 
-      Canvas.Brush.Color := lolor;
+      Canvas.Brush.Color := color;
       Canvas.FillRect(r);
     end else
     begin
@@ -5072,13 +5073,13 @@ begin
     end;
 
     r := Rect(X, Y, SplitterPos, Y + ItemHeight);
-    lolor := FNameColor;
+    color := FNameColor;
 
     // Canvas.Font.Color := clFuchsia;
     if UseStyleColor then
-      lolor := StyleServices.GetSystemColor(clBtnText);
+      color := StyleServices.GetSystemColor(clBtnText);
 
-    Canvas.Font.Color := lolor;
+    Canvas.Font.Color := color;
 
     if (pItem.Instance is TComponent) and (pItem^.Instance <> pItem^.Component) then
       Canvas.Font.Color := FSubPropertiesColor;
@@ -5124,16 +5125,16 @@ begin
   end;
 
   {==> Draw gutter line <==}
-  if not FShowGutter then
+  if not FShowGutterEdge then
     Exit;
 
   // Canvas.Pen.Color := clFuchsia;
-  lolor := FGutterEdgeColor;
+  color := FGutterEdgeColor;
 
-  if UseStyleColor then
-    lolor := StyleServices.GetStyleColor(scSplitter);
+  if UseStyleColor and not (csDesigning in ComponentState) then
+    color := StyleServices.GetStyleColor(scSplitter);
 
-  Canvas.Pen.Color := lolor;
+  Canvas.Pen.Color := color;
   Canvas.Refresh;
   dYT := 0;
   dYB := 0;
@@ -5175,7 +5176,8 @@ begin
   begin
     pNextItem := VisibleItems.Items[AIndex + 1];
     nextPos := (ItemOrder(pNextItem) * FGutterWidth) + FGutterWidth;
-    if pOrdPos <> nextPos then dYB := 0; // dYB = 2 changed to dYB = 0
+    if pOrdPos <> nextPos then
+      dYB := 0; // dYB = 2 changed to dYB = 0
   end;
 
   Canvas.LineTo(pOrdPos, Y + ItemHeight - dYB);
@@ -5599,7 +5601,7 @@ begin
   if AValue > ValueManager.MaximumGutterWidth then
     raise EInvalidGutterWidth.Create;
 
-  if FGutterWidth <> AValue then
+  if (FGutterWidth <> AValue) and (AValue >= 15) then
   begin
     FGutterWidth := AValue;
     Invalidate;
@@ -5711,11 +5713,11 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_ShowGutter(const AValue: Boolean);
+procedure TwxCustomObjectInspector.Set_ShowGutterEdge(const AValue: Boolean);
 begin
-  if AValue <> FShowGutter then
+  if AValue <> FShowGutterEdge then
   begin
-    FShowGutter := AValue;
+    FShowGutterEdge := AValue;
     Invalidate;
   end;
 end;

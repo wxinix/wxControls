@@ -21,7 +21,7 @@ type
     DefaultHeaderPropText: string = 'Property';
     DefaultHeaderValueText: string = 'Value';
     DefaultMaximumGutterWidth: Integer = 40;
-    DefaultMinimumPlusSignWidth: Integer = 10;
+    DefaultMinimumPlusSignWidth: Integer = 12;
   strict private
     class var FEditors: TDictionary<Pointer, TComponentClass>;
     class var FMaximumGutterWidth: Integer;
