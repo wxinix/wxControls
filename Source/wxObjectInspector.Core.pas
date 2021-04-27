@@ -767,7 +767,7 @@ type
     FSortByCategory: Boolean;
     FVisibleItems: TList<PwxPropertyItem>;
     {$REGION 'Property gettors and settors'}
-    procedure Set_BorderStyle(const Value: TBorderStyle);
+    procedure Set_BorderStyle(const AValue: TBorderStyle);
     procedure Set_Component(AValue: TObject);
     function Get_FloatPreference: TwxFloatPreference;
     procedure Set_ObjectVisibility(const AValue: TMemberVisibility);
@@ -1181,28 +1181,28 @@ type
     FValueColor: TColor;
     FValuesNeedHint: Boolean;
     {$REGION 'Property gettors and settors'}
-    procedure Set_AllowSearch(const Value: Boolean);
-    procedure Set_BoldNonDefaultValue(const Value: Boolean);
-    function Get_ExtraRect(Index: Integer): TRect;
-    procedure Set_GridColor(const Value: TColor);
-    procedure Set_GutterColor(const Value: TColor);
-    procedure Set_GutterEdgeColor(const Value: TColor);
-    procedure Set_GutterWidth(const Value: Integer);
-    procedure Set_HighlightColor(const Value: TColor);
-    function Get_ItemRect(Index: Integer): TRect;
-    procedure Set_NameColor(const Value: TColor);
-    procedure Set_NonDefaultValueColor(const Value: TColor);
-    function Get_PlusMinBtnRect(Index: Integer): TRect;
-    function Get_PropTextRect(Index: Integer): TRect;
-    procedure Set_ReadOnlyColor(const Value: TColor);
-    procedure Set_ReferencesColor(const Value: TColor);
+    procedure Set_AllowSearch(const AValue: Boolean);
+    procedure Set_BoldNonDefaultValue(const AValue: Boolean);
+    function Get_ExtraRect(AIndex: Integer): TRect;
+    procedure Set_GridColor(const AValue: TColor);
+    procedure Set_GutterColor(const AValue: TColor);
+    procedure Set_GutterEdgeColor(const AValue: TColor);
+    procedure Set_GutterWidth(const AValue: Integer);
+    procedure Set_HighlightColor(const AValue: TColor);
+    function Get_ItemRect(AIndex: Integer): TRect;
+    procedure Set_NameColor(const AValue: TColor);
+    procedure Set_NonDefaultValueColor(const AValue: TColor);
+    function Get_PlusMinBtnRect(AIndex: Integer): TRect;
+    function Get_PropTextRect(AIndex: Integer): TRect;
+    procedure Set_ReadOnlyColor(const AValue: TColor);
+    procedure Set_ReferencesColor(const AValue: TColor);
     function Get_SelectedItem: PwxPropertyItem;
-    procedure Set_ShowGridLines(const Value: Boolean);
-    procedure Set_ShowGutter(const Value: Boolean);
-    procedure Set_SubPropertiesColor(const Value: TColor);
-    procedure Set_ValueColor(const Value: TColor);
-    function Get_ValueRect(Index: Integer): TRect;
-    function Get_ValueTextRect(Index: Integer): TRect;
+    procedure Set_ShowGridLines(const AValue: Boolean);
+    procedure Set_ShowGutter(const AValue: Boolean);
+    procedure Set_SubPropertiesColor(const AValue: TColor);
+    procedure Set_ValueColor(const AValue: TColor);
+    function Get_ValueRect(AIndex: Integer): TRect;
+    function Get_ValueTextRect(AIndex: Integer): TRect;
     {$ENDREGION}
   private
     procedure CMHintShow(var AMessage: TCMHintShow); message CM_HINTSHOW;
@@ -1214,7 +1214,7 @@ type
     procedure WMLButtonUp(var AMessage: TWMLButtonUp); message WM_LBUTTONUP;
     procedure WMSetFocus(var AMessage: TWMSetFocus); message WM_SETFOCUS;
   protected
-    function CanDrawChevron(Index: Integer): Boolean;
+    function CanDrawChevron(AIndex: Integer): Boolean;
     procedure ChangeScale(M, D: Integer; isDpiChange: Boolean); override;
 
     procedure CreateWnd; override;
@@ -1230,8 +1230,8 @@ type
     function DoSetValue(APropItem: PwxPropertyItem; var Value: TValue): Boolean;
 
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
-    procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
-    procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
+    procedure MouseDown(AButton: TMouseButton; AShift: TShiftState; AX, AY: Integer); override;
+    procedure MouseMove(AShift: TShiftState; AX, AY: Integer); override;
     procedure Paint; override;
 
     procedure PaintCategory(AIndex: Integer); virtual;
@@ -1266,17 +1266,17 @@ type
     property AutoCompleteText: Boolean read FAutoCompleteText write FAutoCompleteText;
     property BoldNonDefaultValue: Boolean read FBoldNonDefaultValue write Set_BoldNonDefaultValue;
     property ClickTime: Integer read FClickTime write FClickTime;
-    property ExtraRect[Index: Integer]: TRect read Get_ExtraRect;
+    property ExtraRect[AIndex: Integer]: TRect read Get_ExtraRect;
     property GridColor: TColor read FGridColor write Set_GridColor;
     property GutterColor: TColor read FGutterColor write Set_GutterColor;
     property GutterEdgeColor: TColor read FGutterEdgeColor write Set_GutterEdgeColor;
     property GutterWidth: Integer read FGutterWidth write Set_GutterWidth;
     property HighlightColor: TColor read FHighlightColor write Set_HighlightColor;
-    property ItemRect[Index: Integer]: TRect read Get_ItemRect;
+    property ItemRect[AIndex: Integer]: TRect read Get_ItemRect;
     property NameColor: TColor read FNameColor write Set_NameColor;
     property NonDefaultValueColor: TColor read FNonDefaultValueColor write Set_NonDefaultValueColor;
-    property PlusMinBtnRect[Index: Integer]: TRect read Get_PlusMinBtnRect;
-    property PropTextRect[Index: Integer]: TRect read Get_PropTextRect;
+    property PlusMinBtnRect[AIndex: Integer]: TRect read Get_PlusMinBtnRect;
+    property PropTextRect[AIndex: Integer]: TRect read Get_PropTextRect;
     property ReadOnlyColor: TColor read FReadOnlyColor write Set_ReadOnlyColor;
     property ReferencesColor: TColor read FReferencesColor write Set_ReferencesColor;
     property SelectedIndex: Integer read FSelectedIndex;
@@ -1287,8 +1287,8 @@ type
     property SubPropertiesColor: TColor read FSubPropertiesColor write Set_SubPropertiesColor;
     property TrackChange: Boolean read FTrackChange write FTrackChange;
     property ValueColor: TColor read FValueColor write Set_ValueColor;
-    property ValueRect[Index: Integer]: TRect read Get_ValueRect;
-    property ValueTextRect[Index: Integer]: TRect read Get_ValueTextRect;
+    property ValueRect[AIndex: Integer]: TRect read Get_ValueRect;
+    property ValueTextRect[AIndex: Integer]: TRect read Get_ValueTextRect;
     property OnCollapseItem: TzPropertyItemEvent read FOnCollapseItem write FOnCollapseItem;
     property OnExpandItem: TzPropertyItemEvent read FOnExpandItem write FOnExpandItem;
     property OnGetItemFriendlyName: TzPropertyItemGetFriendlyNameEvent read FOnGetItemFriendlyName write FOnGetItemFriendlyName;
@@ -1618,9 +1618,11 @@ var
   vkCode: Byte;
   I: Integer;
 const
-  MultiKeysArray: array [0 .. 5] of TShortCut = (scCtrl, scCtrl + scAlt, scCommand,
-    scCtrl + scCommand, scShift + scCommand, scCommand + scAlt);
-  UniqueKeysArray: array [0 .. 3] of TShortCut = (scShift, scCtrl, scAlt, scCommand);
+  MultiKeysArray: array [0 .. 5] of TShortCut
+    = (scCtrl, scCtrl + scAlt, scCommand, scCtrl + scCommand, scShift + scCommand, scCommand + scAlt);
+
+  UniqueKeysArray: array [0 .. 3] of TShortCut
+    = (scShift, scCtrl, scAlt, scCommand);
 
   procedure AddShortCut(ShortCut: TShortCut);
   begin
@@ -1630,17 +1632,18 @@ begin
   AddShortCut(scNone);
 
   { Keys + (A .. Z) }
-  for I := Low(MultiKeysArray) to High(MultiKeysArray) do begin
-    for vkCode := vkA to vkZ do AddShortCut(vkCode or MultiKeysArray[I]);
-  end;
+  for I := Low(MultiKeysArray) to High(MultiKeysArray) do
+    for vkCode := vkA to vkZ do
+      AddShortCut(vkCode or MultiKeysArray[I]);
 
   { Keys + (F1 .. F12) }
-  for I := Low(MultiKeysArray) to High(MultiKeysArray) do begin
-    for vkCode := vkF1 to vkF12 do AddShortCut(vkCode or MultiKeysArray[I]);
-  end;
+  for I := Low(MultiKeysArray) to High(MultiKeysArray) do
+    for vkCode := vkF1 to vkF12 do
+      AddShortCut(vkCode or MultiKeysArray[I]);
 
   { Key + (Insert,Delete,Enter,Esc) }
-  for I := Low(UniqueKeysArray) to High(UniqueKeysArray) do begin
+  for I := Low(UniqueKeysArray) to High(UniqueKeysArray) do
+  begin
     AddShortCut(UniqueKeysArray[I] + vkInsert); // Insert
     AddShortCut(UniqueKeysArray[I] + vkDelete); // Delete
     AddShortCut(UniqueKeysArray[I] + vkReturn); // Enter
@@ -1699,14 +1702,16 @@ begin
   // Then draw element of self
   StyleServices.DrawElement(Canvas.Handle, themeDetails, ClientRect);
 
-  if FDropDown then begin
+  if FDropDown then
+  begin
     oldPenColor := Canvas.Pen.Color;
     Canvas.Pen.Color := StyleServices.GetSystemColor(clWindowText);
     // Arrow height = size; arrow length = 2 x size.
     arrowLocation := Point(Width div 2 - ScaledArrowSize, Height div 2 - ScaledArrowSize div 2);
     DrawArrow(Canvas, sdDown, arrowLocation, ScaledArrowSize);
     Canvas.Pen.Color := oldPenColor;
-  end else begin
+  end else
+  begin
     oldFontStyles := Canvas.Font.Style;
 
     if StyleServices.IsSystemStyle then
@@ -1763,12 +1768,14 @@ end;
 procedure TwxObjectInspectorEdit.ButtonClick(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   // When Button is visible, HasButton must be True, meaning either ListBox, or Dialog
-  if Assigned(FListBox) then begin
+  if Assigned(FListBox) then
+  begin
     if IsWindowVisible(FListBox.Handle) then
       HideList
     else
       ShowList;
-  end else begin
+  end else
+  begin
     ShowModalDialog;
   end;
 end;
@@ -1778,10 +1785,13 @@ begin
   inherited;
   // CMCancelMode is generated whenever mouse left button is down. We would like
   // to only respond to the Sender Edit.
-  if (AMessage.Sender = FButton) or (AMessage.Sender = FListBox) then Exit;
+  if (AMessage.Sender = FButton) or (AMessage.Sender = FListBox) then
+    Exit;
 
-  if Assigned(FListBox) then begin
-    if IsWindowVisible(FListBox.Handle) then begin
+  if Assigned(FListBox) then
+  begin
+    if IsWindowVisible(FListBox.Handle) then
+    begin
       HideList;
       DoSetValueFromList;
     end;
@@ -1801,11 +1811,15 @@ var
 begin
   inherited;
 
-  if ValueManager.HasDialog(FPropertyItem) then begin
+  if ValueManager.HasDialog(FPropertyItem) then
+  begin
     ShowModalDialog
-  end else begin
-    if Assigned(FListBox) then begin
-      if FListBox.Items.Count > 0 then begin
+  end else
+  begin
+    if Assigned(FListBox) then
+    begin
+      if FListBox.Items.Count > 0 then
+      begin
         listIndex := FListBox.ItemIndex + 1;
 
         if listIndex >= FListBox.Items.Count then
@@ -1838,26 +1852,29 @@ begin
   if (ReadOnly) or (FPropertyItem^.IsSet) or (not FPropertyItem^.AssociatedProperty.IsWritable) then
     Exit;
 
-  if str.IsEmpty then begin
+  if str.IsEmpty then
+  begin
     uint64Val := 0;
     value := ValueManager.GetValue(FPropertyItem, uint64Val);
     // Via ispector so proper events can be fired by inspector. Otherwise we can direclty set to
     // the property itme.
     TwxCustomObjectInspector(FOwnerInspector).SetPropValue(FPropertyItem, value);
     Exit;
-  end else begin
-    if Assigned(FListBox) then begin
+  end else
+  begin
+    if Assigned(FListBox) then
+    begin
       listIndex := FListBox.Items.IndexOf(str);
 
-      if listIndex > - 1 then begin
+      if listIndex > - 1 then
+      begin
         FListBox.Selected[listIndex] := True;
         DoSetValueFromList;
         Exit;
-      end else begin
-        if not ValueManager.ValueHasOpenProbabilities(FPropertyItem) then begin
+      end else
+      begin
+        if not ValueManager.ValueHasOpenProbabilities(FPropertyItem) then
           raise EInvalidPropertyValue.Create(FPropertyItem.Name, str);
-          Exit; // Is this exit necessary?
-        end;
       end
     end;
   end;
@@ -1884,11 +1901,13 @@ begin
 
   obj := (FListBox.Items.Objects[FListBox.ItemIndex]);
 
-  if FPropertyItem.AssociatedProperty.PropertyType.TypeKind = tkMethod then begin
+  if FPropertyItem.AssociatedProperty.PropertyType.TypeKind = tkMethod then
+  begin
     method.Code := obj;
     method.Data := FPropertyItem.AssociatedComponentParentForm;
     newValue := ValueManager.GetValue(FPropertyItem, method);
-  end else begin
+  end else
+  begin
     newValue := ValueManager.GetValue(FPropertyItem, obj);
   end;
 
@@ -1934,7 +1953,8 @@ begin
   if not FPropertyItem.AssociatedProperty.IsWritable then
     Exit;
 
-  if not ValueManager.HasListBox(FPropertyItem) then begin
+  if not ValueManager.HasListBox(FPropertyItem) then
+  begin
     if (ValueManager.HasDialog(FPropertyItem)) then
       FButton.DropDown := False;
     // As long as HasNoListBox, Exit.
@@ -1983,9 +2003,11 @@ begin
   inspector := TwxCustomObjectInspector(FOwnerInspector);
 
   // Determine ReadOnly
-  if inspector.ReadOnly then begin
+  if inspector.ReadOnly then
+  begin
     Self.ReadOnly := True;
-  end else begin
+  end else
+  begin
     Self.ReadOnly := not FPropertyItem^.AssociatedProperty.IsWritable;
     if (FPropertyItem^.IsSet) or (FPropertyItem^.IsClass) then
       Self.ReadOnly := True;
@@ -2010,7 +2032,8 @@ end;
 
 procedure TwxObjectInspectorEdit.Set_PropertyItem(const AItem: PwxPropertyItem);
 begin
-  if not FPropertyItem.EqualTo(AItem) then begin
+  if not FPropertyItem.EqualTo(AItem) then
+  begin
     FPropertyItem := AItem;
     PropertyItemChanged;
   end;
@@ -2091,7 +2114,8 @@ begin
     mr := ValueManager.PerformDialogAction(FPropertyItem, dlg, dcShow);
     PostMessage(Handle, WM_LBUTTONUP, 0, 0);
 
-    if mr = mrOk then begin
+    if mr = mrOk then
+    begin
       ValueManager.PerformDialogAction(FPropertyItem, dlg, dcFinished);
       dlgResult := ValueManager.DialogResultValue(FPropertyItem, dlg);
       TwxCustomObjectInspector(FOwnerInspector).SetPropValue(FPropertyItem, dlgResult);
@@ -2182,9 +2206,12 @@ begin
   { Auto complete user input text }
   findText := Text;
 
-  if Assigned(FListBox) then begin
-    for I := 0 to FListBox.Items.Count - 1 do begin
-      if StartsWith(findText, FListBox.Items[I]) then begin
+  if Assigned(FListBox) then
+  begin
+    for I := 0 to FListBox.Items.Count - 1 do
+    begin
+      if StartsWith(findText, FListBox.Items[I]) then
+      begin
         Text := FListBox.Items[I];
         SelStart := Length(findText);
         SelLength := Length(FListBox.Items[I]) - 1;
@@ -2211,7 +2238,8 @@ begin
   case AMessage.CharCode of
     vkReturn:
       begin
-        if isToList then begin
+        if isToList then
+        begin
           HideList;
           DoSetValueFromList;
           Exit;
@@ -2246,7 +2274,8 @@ procedure TwxObjectInspectorEdit.WMKillFocus(var AMessage: TWMKillFocus);
 begin
   inherited;
 
-  if Assigned(FListBox) then begin
+  if Assigned(FListBox) then
+  begin
     if IsWindowVisible(FListBox.Handle) then
       HideList;
   end;
@@ -2269,7 +2298,8 @@ var
 begin
   { When PropInspEdit is activated, the Inspector will not fire the WMLBUTTONDBLCLK message .
     => we need to detect the double click manually! }
-  if TwxCustomObjectInspector(FOwnerInspector).ClickTime <> - 1 then begin
+  if TwxCustomObjectInspector(FOwnerInspector).ClickTime <> - 1 then
+  begin
     curClickTime := GetTickCount;
     elapsedTime := curClickTime - TwxCustomObjectInspector(FOwnerInspector).ClickTime;
 
@@ -2327,17 +2357,20 @@ end;
 
 procedure TwxFloatPreference.Assign(ASource: TPersistent);
 begin
-  if ASource is TwxFloatPreference then begin
+  if ASource is TwxFloatPreference then
+  begin
     MaxDigits := TwxFloatPreference(ASource).MaxDigits;
     ExpPrecision := TwxFloatPreference(ASource).ExpPrecision;
-  end else begin
+  end else
+  begin
     inherited Assign(ASource);
   end;
 end;
 
 procedure TwxPropertyItem.CheckOwnerList;
 begin
-  if not Assigned(FOwnerList) then raise EItemOwnerListNotAssigned.Create;
+  if not Assigned(FOwnerList) then
+    raise EItemOwnerListNotAssigned.Create;
 end;
 
 class function TwxPropertyItem.Empty: TwxPropertyItem;
@@ -2397,22 +2430,26 @@ begin
 
   selfPos := FOwnerList.IndexOf(@Self);
 
-  if selfPos > - 1 then begin
-    for I := selfPos + 1 to FOwnerList.Count - 1 do begin
+  if selfPos > - 1 then
+  begin
+    for I := selfPos + 1 to FOwnerList.Count - 1 do
+    begin
       // Search till next category index is changed to a different
       // If any item has IsCategory = True, that means the inspector is being showned in terms of
       // category.
-      if IsCategory then begin
+      if IsCategory then
+      begin
         if FOwnerList.Items[I].CategoryIndex = CategoryIndex then
           Inc(Result)
-        else
-          if FOwnerList.Items[I].CategoryIndex <> -1 then Break;
-      end else begin
+        else if FOwnerList.Items[I].CategoryIndex <> -1 then
+          Break;
+      end else
+      begin
         // Check parents to get child!
         if FOwnerList.Items[I].Parent = @Self then
           Inc(Result)
-        else
-          if FOwnerList.Items[I].Parent = Parent then Break;
+        else if FOwnerList.Items[I].Parent = Parent then
+          Break;
       end;
     end;
   end;
@@ -2433,17 +2470,22 @@ begin
   try
     selfPos := FOwnerList.IndexOf(@Self);
 
-    if selfPos > - 1 then begin
-      for I := selfPos + 1 to FOwnerList.Count - 1 do begin
-        if IsCategory then begin
+    if selfPos > - 1 then
+    begin
+      for I := selfPos + 1 to FOwnerList.Count - 1 do
+      begin
+        if IsCategory then
+        begin
           if FOwnerList.Items[I].CategoryIndex = CategoryIndex then
             childList.Add(FOwnerList.Items[I]);
-        end else begin
+        end else
+        begin
           if FOwnerList.Items[I].Parent = @Self then
             childList.Add(FOwnerList.Items[I]);
         end;
 
-        if childList.Count > AIndex then Break;
+        if childList.Count > AIndex then
+          Break;
       end;
 
       if AIndex < childList.Count then
@@ -2468,8 +2510,10 @@ function TwxPropertyItem.Get_Expanded: Boolean;
 begin
   CheckOwnerList;
   Result := ChildCount > 0;
-  if Result then Result := Assigned(ChildItems[0]);
-  if Result then Result := ChildItems[0].Visible;
+  if Result then
+    Result := Assigned(ChildItems[0]);
+  if Result then
+    Result := ChildItems[0].Visible;
 end;
 
 procedure TwxPropertyItem.Set_FloatPreference(const AValue: TwxFloatPreference);
@@ -2642,28 +2686,33 @@ begin
   end;
 
   // Color -> color name string
-  if (Self.Value.TypeInfo = TypeInfo(TColor)) then begin
+  if (Self.Value.TypeInfo = TypeInfo(TColor)) then
+  begin
     Result := ColorToString(TValueConverter.GetValueAs<TColor>(Self.Value));
     Exit;
   end;
 
   // Cursor -> cursor name string
-  if (Self.Value.TypeInfo = TypeInfo(TCursor)) then begin
+  if (Self.Value.TypeInfo = TypeInfo(TCursor)) then
+  begin
     Result := CursorToString(TValueConverter.GetValueAs<TCursor>(Self.Value));
     Exit;
   end;
 
   // Shortcut -> shortcut string
-  if (Self.Value.TypeInfo = TypeInfo(TShortCut)) then begin
+  if (Self.Value.TypeInfo = TypeInfo(TShortCut)) then
+  begin
     Result := ShortCutToTextEx(TValueConverter.GetValueAs<TShortCut>(Self.Value));
     Exit;
   end;
 
   // Object -> Object Name, or Component Name string
-  if Self.Value.IsObject then begin
+  if Self.Value.IsObject then
+  begin
     Result := EmptyStr;
 
-    if not Self.Value.IsEmpty then begin
+    if not Self.Value.IsEmpty then
+    begin
       obj := TValueConverter.GetValueAs<TObject>(Self.Value);
       Result := Format('(%s)', [obj.ToString]);
 
@@ -2675,25 +2724,29 @@ begin
   end;
 
   // Method (event handler) will be the method name, as get from its parent form.
-  if Self.AssociatedProperty.PropertyType.TypeKind = tkMethod then begin
+  if Self.AssociatedProperty.PropertyType.TypeKind = tkMethod then
+  begin
     Result := GetMethodName(Self.Value, Self.AssociatedComponentParentForm);
     Exit;
   end;
 
   // Single -> string format single
-  if Self.Value.TypeInfo = TypeInfo(Single) then begin
+  if Self.Value.TypeInfo = TypeInfo(Single) then
+  begin
     Result := TValueData(Self.Value).FAsSingle.ToString(ffGeneral, FFloatPreference.ExpPrecision, FFloatPreference.MaxDigits);
     Exit;
   end;
 
   // Double -> string format double
-  if Self.Value.TypeInfo = TypeInfo(Double) then begin
+  if Self.Value.TypeInfo = TypeInfo(Double) then
+  begin
     Result := Self.Value.AsExtended.ToString(ffGeneral, FFloatPreference.ExpPrecision, FFloatPreference.MaxDigits);
     Exit;
   end;
 
   // Extended -> string format extended
-  if Self.Value.TypeInfo = TypeInfo(Extended) then begin
+  if Self.Value.TypeInfo = TypeInfo(Extended) then
+  begin
     Result := Self.Value.AsExtended.ToString(ffGeneral, FFloatPreference.ExpPrecision, FFloatPreference.MaxDigits);
     Exit;
   end;
@@ -2722,7 +2775,8 @@ begin
 
   if Count > 0 then
     for I := 0 to Count - 1 do
-      if SameText(Items[I].QualifiedName, AQualifiedName) then Exit(I);
+      if SameText(Items[I].QualifiedName, AQualifiedName) then
+        Exit(I);
 end;
 
 // Cannot be a local procedure in win64
@@ -2849,8 +2903,10 @@ begin
   Result := GetDeclaredProperties;
   propArray := GetProperties;
 
-  for prop in propArray do begin
-    if not Contains(Result, prop) then begin
+  for prop in propArray do
+  begin
+    if not Contains(Result, prop) then
+    begin
       propArrayLen := Length(Result) + 1;
       SetLength(Result, propArrayLen);
       Result[propArrayLen - 1] := prop;
@@ -3213,7 +3269,8 @@ begin
 
   parentItem := AItem.Parent;
 
-  while Assigned(parentItem) do begin
+  while Assigned(parentItem) do
+  begin
     if wasModified(parentItem) then
       Exit(True);
 
@@ -3233,7 +3290,8 @@ begin
   if I <= 0 then
     Exit;
 
-  while I > 0 do begin
+  while I > 0 do
+  begin
     Inc(Result);
     I := Pos('.', s, I + 1);
   end;
@@ -3253,7 +3311,8 @@ var
 begin
   Result := False;
 
-  for I := 0 to FVisibleItems.Count - 1 do begin
+  for I := 0 to FVisibleItems.Count - 1 do
+  begin
     PItem := FVisibleItems[I];
 
     if ItemNeedUpdate(PItem) then
@@ -3294,13 +3353,15 @@ var
 begin
   FVisibleItems.Clear;
 
-  for I := 0 to FItems.Count - 1 do begin
+  for I := 0 to FItems.Count - 1 do
+  begin
     item := FItems.Items[I];
 
     if item^.IsCategory then begin
       if FExpandedList.Contains(item.QualifiedName) then
         makeChildrenVisible;
-    end else begin
+    end else
+    begin
       visibleCondition := (item.ChildCount > 0) and FIsSettingComponent and Assigned(OnAutoExpandItemOnInit)
         and OnAutoExpandItemOnInit(Self, item);
 
@@ -3330,17 +3391,19 @@ begin
   inherited;
 end;
 
-procedure TwxAbstractObjectInspector.Set_BorderStyle(const Value: TBorderStyle);
+procedure TwxAbstractObjectInspector.Set_BorderStyle(const AValue: TBorderStyle);
 begin
-  if FBorderStyle <> Value then begin
-    FBorderStyle := Value;
+  if FBorderStyle <> AValue then
+  begin
+    FBorderStyle := AValue;
     RecreateWnd; // TWinControl.RecreateWnd
   end;
 end;
 
 procedure TwxAbstractObjectInspector.Set_Component(AValue: TObject);
 begin
-  if AValue <> FComponent then begin
+  if AValue <> FComponent then
+  begin
     FIsSettingComponent := True;
     try
       if Assigned(FComponent) and (FComponent is TwxObjectHost) then
@@ -3388,7 +3451,8 @@ end;
 
 procedure TwxAbstractObjectInspector.Set_SortByCategory(const AValue: Boolean);
 begin
-  if FSortByCategory <> AValue then begin
+  if FSortByCategory <> AValue then
+  begin
     FSortByCategory := AValue;
     UpdateProperties(True);
   end;
@@ -3585,19 +3649,22 @@ begin
     isMultiInstance := False;
     component := FComponent;
 
-    if FComponent is TwxObjectHost then begin
+    if FComponent is TwxObjectHost then
+    begin
       objHost := TwxObjectHost(FComponent);
       FSortByCategory := True;
       isMultiInstance := True;
       FCategories.Clear;
       FPropertyCategoryMap.Clear;
 
-      for I := 0 to objHost.Count - 1 do begin
+      for I := 0 to objHost.Count - 1 do
+      begin
         component := objHost.Item[I].Key;
         componentName := objHost.Item[I].Value;
         EnumProps(component, nil, nil, componentName + '.' + component.Tostring, component.Tostring);
       end;
-    end else begin
+    end else
+    begin
       EnumProps(FComponent, nil, nil, FComponent.Tostring, FComponent.Tostring);
     end;
 
@@ -3711,7 +3778,8 @@ begin
   else
     Cursor := crArrow;
 
-  if FSplitterDown then begin
+  if FSplitterDown then
+  begin
     if (pt.X <> FSplitterPos) and (pt.X > cSplitterPosMargin ) and (pt.X < ClientWidth - cSplitterPosMargin) then begin
       FSplitterPos := pt.X;
       SplitterPosChanged(FSplitterPos);
@@ -3722,7 +3790,8 @@ end;
 
 procedure TwxSplitteredObjectInspector.Set_SplitterColor(const AValue: TColor);
 begin
-  if AValue <> FSplitterColor then begin
+  if AValue <> FSplitterColor then
+  begin
     FSplitterColor := AValue;
     Invalidate;
   end;
@@ -3818,18 +3887,23 @@ begin
   if SplitterRect.Contains(pt) then
     Exit;
 
-  if HeaderRect.Contains(pt) then begin
-    if not FHeaderPressed then begin
+  if HeaderRect.Contains(pt) then
+  begin
+    if not FHeaderPressed then
+    begin
       FHeaderPropPressed := HeaderPropRect.Contains(pt);
       FHeaderValuePressed := HeaderValueRect.Contains(pt);
       FHeaderPressed := True;
       Invalidate;
     end;
 
-    if Assigned(FOnHeaderMouseDown) then begin
-      if FHeaderPropPressed then begin
+    if Assigned(FOnHeaderMouseDown) then
+    begin
+      if FHeaderPropPressed then
+      begin
         FOnHeaderMouseDown(Self, hpLeft, pt.X, pt.Y)
-      end else begin
+      end else
+      begin
         if FHeaderValuePressed then
           FOnHeaderMouseDown(Self, hpRight, pt.X, pt.Y);
       end;
@@ -3848,8 +3922,10 @@ begin
 
   pt := Point(AMessage.XPos, AMessage.YPos);
 
-  if HeaderRect.Contains(pt) then begin
-    if FHeaderPressed then begin
+  if HeaderRect.Contains(pt) then
+  begin
+    if FHeaderPressed then
+    begin
       FHeaderPropPressed := False;
       FHeaderValuePressed := False;
       FHeaderPressed := False;
@@ -3865,7 +3941,8 @@ end;
 
 procedure TwxHeaderedObjectInspector.Set_HeaderPropText(const AValue: string);
 begin
-  if FHeaderPropText <> AValue then begin
+  if FHeaderPropText <> AValue then
+  begin
     FHeaderPropText := AValue;
     Invalidate;
   end;
@@ -3883,7 +3960,8 @@ end;
 
 procedure TwxHeaderedObjectInspector.Set_HeaderValueText(const AValue: string);
 begin
-  if FHeaderValueText <> AValue then begin
+  if FHeaderValueText <> AValue then
+  begin
     FHeaderValueText := AValue;
     Invalidate;
   end;
@@ -3891,7 +3969,8 @@ end;
 
 procedure TwxHeaderedObjectInspector.Set_ShowHeader(const AValue: Boolean);
 begin
-  if FShowHeader <> AValue then begin
+  if FShowHeader <> AValue then
+  begin
     FShowHeader := AValue;
     Invalidate;
   end;
@@ -3940,11 +4019,13 @@ var
 begin
   Result := - 1;
 
-  for I := 0 to MaxItemCount do begin
+  for I := 0 to MaxItemCount do
+  begin
     Y := ItemTop(I);
     R := Rect(0, Y, Width, Y + ItemHeight);
 
-    if R.Contains(APoint) then begin
+    if R.Contains(APoint) then
+    begin
       Result := (I + FirstItemIndex);
 
       if (Result >= VisibleItems.Count) then
@@ -3998,7 +4079,8 @@ begin
   FirstItem := FirstItemIndex;
   LastItem := LastItemIndex;
 
-  for I := FirstItem to LastItem do begin
+  for I := FirstItem to LastItem do
+  begin
     CanvasStack.Push(Canvas);
     PaintItem(i);
     CanvasStack.Pop;
@@ -4034,7 +4116,8 @@ begin
   FScrollInfo.nMax := VisiblePropCount - 1;
   FScrollInfo.nPage := MaxItemCount;
 
-  if Assigned(Parent) and not (csDestroying in ComponentState) then begin
+  if Assigned(Parent) and not (csDestroying in ComponentState) then
+  begin
     SetScrollInfo(Handle, SB_VERT, FScrollInfo, False);
     InvalidateNC;
   end;
@@ -4092,13 +4175,15 @@ var
       Child: TControl;
     begin
       { Manually Scroll Childs when ScrollFlags <> SW_SCROLLCHILDREN ! }
-      for I := 0 to Self.ControlCount - 1 do begin
+      for I := 0 to Self.ControlCount - 1 do
+      begin
         Child := Self.Controls[i];
 
         if not (Child is TwxObjectInspectorButton) and (Child.Visible) then begin
           L := Child.Top + YAmount;
 
-          if Assigned(pExcludeRect) and pExcludeRect.Contains(Point(Child.Left, L)) then begin
+          if Assigned(pExcludeRect) and pExcludeRect.Contains(Point(Child.Left, L)) then
+          begin
             if YAmount < 0 then
               Dec(L, pExcludeRect.Height)
             else
@@ -4114,7 +4199,8 @@ var
   begin
     { If the header is visible
       => We must exclude the header area from being scrolled ! }
-    if ShowHeader then begin
+    if ShowHeader then
+    begin
       UpdateWindow(Handle);
       LScrollArea := Rect(0, HeaderRect.Height, ClientWidth, ClientHeight);
       ScrollFlags := SW_INVALIDATE or SW_SCROLLCHILDREN;
@@ -4123,7 +4209,8 @@ var
       hrgnUpdate := CreateRectRgn(LScrollArea.Left, LScrollArea.Top, LScrollArea.Right, LScrollArea.Bottom);
       ScrollWindowEx(Handle, XAmount, YAmount, nil, @LScrollArea, hrgnUpdate, nil, ScrollFlags);
       DeleteObject(hrgnUpdate);
-    end else begin
+    end else
+    begin
       ScrollWindow(Handle, XAmount, YAmount, nil, nil);
       UpdateWindow(Handle); { Update the non validated area . }
     end;
@@ -4161,7 +4248,8 @@ begin
       FScrollInfo.nPos := FScrollInfo.nPos + Integer(FScrollInfo.nPage);
     SB_THUMBTRACK: { VCL Style Support ! }
       begin
-        if StyleServices.Available and (not StyleServices.IsSystemStyle) then begin
+        if StyleServices.Available and (not StyleServices.IsSystemStyle) then
+        begin
           {
             if the Vcl Style is enabled and the user is scrolling ,
             the (ScrollInfo.nPos - ScrollInfo.nTrackPos) is always 0 !
@@ -4171,19 +4259,23 @@ begin
           FPrevScrollPos := AMessage.Pos;
           Invalidate;
           Exit; // must exit
-        end else begin
+        end else
+        begin
           FScrollInfo.nPos := FScrollInfo.nTrackPos;
         end;
       end;
     SB_ENDSCROLL:
       begin
         { Restore caret visibility ! }
-        if ShowHeader and (ContainsWindow(GetCaretWnd, Handle)) and not IsCaretVisible then begin
+        if ShowHeader and (ContainsWindow(GetCaretWnd, Handle)) and not IsCaretVisible then
+        begin
           Cntrl := GetCaretControl;
-          if Assigned(Cntrl) then begin
+          if Assigned(Cntrl) then
+          begin
             GetCaretPos(P);
             P := Cntrl.ClientToParent(P);
-            if not HeaderRect.Contains(P) then ShowCaret(0);
+            if not HeaderRect.Contains(P) then
+              ShowCaret(0);
           end;
         end;
       end;
@@ -4270,15 +4362,16 @@ end;
 
 { TzCustomObjInspector }
 
-function TwxCustomObjectInspector.CanDrawChevron(Index: Integer): Boolean;
+function TwxCustomObjectInspector.CanDrawChevron(AIndex: Integer): Boolean;
 var
   PItem: PwxPropertyItem;
   iOrd: Integer;
 begin
   Result := False;
 
-  if (Index > - 1) and (Index = FSelectedIndex) then begin
-    PItem := VisibleItems.Items[Index];
+  if (AIndex > - 1) and (AIndex = FSelectedIndex) then
+  begin
+    PItem := VisibleItems.Items[AIndex];
     iOrd := ItemOrder(PItem);
 
     if (iOrd > 0) or ((iOrd = 0) and (not PItem.HasChild)) then
@@ -4290,7 +4383,8 @@ end;
 
 procedure TwxCustomObjectInspector.ChangeScale(M, D: Integer; isDpiChange: Boolean);
 begin
-  if (M <> D) then begin
+  if (M <> D) then
+  begin
     FGutterWidth := MulDiv(FGutterWidth, M, D);
     SplitterPos := MulDiv(SplitterPos, M, D);
 
@@ -4308,11 +4402,13 @@ end;
 
 procedure TwxCustomObjectInspector.CMHintShow(var AMessage: TCMHintShow);
 begin
-  if FIsItemHint and FShowItemHint then begin
+  if FIsItemHint and FShowItemHint then
+  begin
     AMessage.HintInfo.HintPos := FHintPoint;
     AMessage.HintInfo.HintWindowClass := TzObjectInspectorItemHintWindow;
     AMessage.HintInfo.HintData := Pointer(FBoldHint);
-  end else begin
+  end else
+  begin
     inherited;
   end;
 
@@ -4363,13 +4459,15 @@ begin
 
   Result := False; // Indicate that item is already Collapsed !
 
-  for I := 0 to APropItem.ChildCount - 1 do begin
+  for I := 0 to APropItem.ChildCount - 1 do
+  begin
     PChild := APropItem.ChildItems[i];
 
-    if Assigned(PChild) then begin
+    if Assigned(PChild) then
+    begin
 
-      if PChild^.Visible then begin
-
+      if PChild^.Visible then
+      begin
         if PChild^.HasChild then
           DoCollapseItem(PChild);
 
@@ -4399,7 +4497,8 @@ var
     J: Integer;
     P: PwxPropertyItem;
   begin
-    for J := 0 to PParent.ChildCount - 1 do begin
+    for J := 0 to PParent.ChildCount - 1 do
+    begin
       P := PParent^.ChildItems[J];
       P^.Visible := Visible;
 
@@ -4420,8 +4519,9 @@ begin
   if CircularLinkedProperties.Contains(APropItem.QualifiedName) then
     Exit(False);
 
-  if Assigned(FOnExpandItem) then if not FOnExpandItem(Self, APropItem) then
-    Exit(False);
+  if Assigned(FOnExpandItem) then
+    if not FOnExpandItem(Self, APropItem) then
+      Exit(False);
 
   Result := False; // Indicate that item is already Expanded !
 
@@ -4431,10 +4531,12 @@ begin
   if not SaveVisibleItems.Contains(APropItem^.QualifiedName) then
     SaveVisibleItems.Add(APropItem^.QualifiedName);
 
-  for I := 0 to APropItem^.ChildCount - 1 do begin
+  for I := 0 to APropItem^.ChildCount - 1 do
+  begin
     PChild := APropItem^.ChildItems[i];
 
-    if Assigned(PChild) then begin
+    if Assigned(PChild) then
+    begin
 
       if not PChild^.Visible then
         Result := True;
@@ -4504,8 +4606,10 @@ var
 begin
   Result := False;
 
-  if (AIndex > - 1) and (AIndex < VisibleItems.Count - 1) then begin
-    if CanFocus then begin
+  if (AIndex > - 1) and (AIndex < VisibleItems.Count - 1) then
+  begin
+    if CanFocus then
+    begin
       SelectItem(AIndex);
 
       if GetFocus <> Handle then
@@ -4516,8 +4620,10 @@ begin
       s := FSearchText;
       offset := 0;
 
-      if not s.IsEmpty then begin
-        for I := 1 to Length(s) do offset := offset + Canvas.TextWidth(s[i]); { Calc caret pos }
+      if not s.IsEmpty then
+      begin
+        for I := 1 to Length(s) do
+          offset := offset + Canvas.TextWidth(s[i]); { Calc caret pos }
       end;
 
       SetCaretPos(x + offset - 1, y + 1);
@@ -4537,7 +4643,8 @@ begin
   if Assigned(FOnItemSetValue) then
     Result := FOnItemSetValue(Self, APropItem, Value);
 
-  if Result then begin
+  if Result then
+  begin
     ValueManager.SetValue(APropItem, Value);
 
     if APropItem.IsClass then
@@ -4588,7 +4695,8 @@ begin
 
   LSelectedItem := SelectedItem;
 
-  if (GetCaretWnd = Handle) and (FSelectedIndex > - 1) and Assigned(LSelectedItem) then begin
+  if (GetCaretWnd = Handle) and (FSelectedIndex > - 1) and Assigned(LSelectedItem) then
+  begin
     NewIndex := FSelectedIndex;
     case Key of
       vkUp:
@@ -4605,18 +4713,22 @@ begin
       NewIndex := - 1;
       LTxt := VirtualKeyToStr(Key);
 
-      if LTxt.IsEmpty then begin
+      if LTxt.IsEmpty then
+      begin
         FSearchText := '';
         Exit;
       end;
 
       FSearchText := FSearchText + LTxt;
 
-      for I := 0 to VisibleItems.Count - 1 do begin
+      for I := 0 to VisibleItems.Count - 1 do
+      begin
         PItem := VisibleItems[i];
 
-        if PItem.Parent = LSelectedItem.Parent then begin
-          if StartsWith(FSearchText, PItem.Name) then begin
+        if PItem.Parent = LSelectedItem.Parent then
+        begin
+          if StartsWith(FSearchText, PItem.Name) then
+          begin
             FSearchText := Copy(PItem.Name, 0, Length(FSearchText)); { Respect the case sensitive }
             if DoSelectCaret(i) then
               Exit;
@@ -4625,7 +4737,8 @@ begin
       end;
     end;
 
-    if NewIndex >= 0 then begin
+    if NewIndex >= 0 then
+    begin
       FSearchText := '';
       SelectItem(NewIndex);
     end;
@@ -4634,159 +4747,174 @@ begin
   FSearchText := '';
 end;
 
-procedure TwxCustomObjectInspector.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TwxCustomObjectInspector.MouseDown(AButton: TMouseButton; AShift: TShiftState; AX, AY: Integer);
 var
-  Index: Integer;
-  P: TPoint;
-  PItem: PwxPropertyItem;
-  MustUpdate: Boolean;
-  SaveItem: TwxPropertyItem;
+  idx: Integer;
+  pt: TPoint;
+  pItem: PwxPropertyItem;
+  mustUpdate: Boolean;
+  saveItem: TwxPropertyItem;
 begin
   inherited;
   if CanFocus then WinApi.Windows.SetFocus(Handle);
   FSearchText := '';
   FExtraRectIndex := - 1;
-  P := Point(X, Y);
+  pt := Point(AX, AY);
 
-  if SplitterRect.Contains(P) then
+  if SplitterRect.Contains(pt) then
     Exit;
 
-  if ShowHeader and HeaderRect.Contains(P) then
+  if ShowHeader and HeaderRect.Contains(pt) then
     Exit;
 
   if FTrackChange and NeedUpdate then
     UpdateProperties(); // In case that some property was changed outside of the Inspector !
 
-  MustUpdate := False; // No need to Update .
-  Index := IndexFromPoint(P);
+  mustUpdate := False; // No need to Update .
+  idx := IndexFromPoint(pt);
 
-  if Index > - 1 then begin
-    PItem := VisibleItems.Items[Index];
+  if idx > - 1 then
+  begin
+    pItem := VisibleItems.Items[idx];
 
-    if not FTrackChange then begin
-      if ItemNeedUpdate(PItem) then begin
-        SaveItem := PItem^;
+    if not FTrackChange then
+    begin
+      if ItemNeedUpdate(pItem) then
+      begin
+        saveItem := pItem^;
         UpdateProperties;
-        Index := Items.IndexOfQualifiedName(SaveItem.QualifiedName);
+        idx := Items.IndexOfQualifiedName(saveItem.QualifiedName);
 
-        if Index < 0 then begin
+        if idx < 0 then
+        begin
           Invalidate;
           Exit;
         end;
 
-        PItem := Items.Items[Index];
-        Index := VisibleItems.IndexOf(PItem);
-        PItem := VisibleItems.Items[Index];
+        pItem := Items.Items[idx];
+        idx := VisibleItems.IndexOf(pItem);
+        pItem := VisibleItems.Items[idx];
       end;
     end;
 
-    if (PItem^.HasChild) and (PlusMinBtnRect[Index].Contains(P)) and (not IsItemCircularLink(PItem)) then begin
-      if PItem^.ChildCount = 0 then begin
+    if (pItem^.HasChild) and (PlusMinBtnRect[idx].Contains(pt)) and (not IsItemCircularLink(pItem)) then
+    begin
+      if pItem^.ChildCount = 0 then
+      begin
         { FItems list does not contains childs ! }
         { => Must ReBuild the list ! }
-        SaveItem := PItem^;
+        saveItem := pItem^;
         UpdateItems;
         UpdateVisibleItems;
-        Index := Items.IndexOfQualifiedName(SaveItem.QualifiedName);
+        idx := Items.IndexOfQualifiedName(saveItem.QualifiedName);
 
-        if Index < 0 then
+        if idx < 0 then
           Exit;
 
-        PItem := Items.Items[Index];
-        Index := VisibleItems.IndexOf(PItem);
+        pItem := Items.Items[idx];
+        idx := VisibleItems.IndexOf(pItem);
 
-        if Index < 0 then
+        if idx < 0 then
           Exit;
       end;
 
-      if PItem.Expanded then begin
-        if ExpandedList.Contains(PItem^.QualifiedName) then
-          ExpandedList.Remove(PItem^.QualifiedName);
+      if pItem.Expanded then
+      begin
+        if ExpandedList.Contains(pItem^.QualifiedName) then
+          ExpandedList.Remove(pItem^.QualifiedName);
 
-        MustUpdate := DoCollapseItem(PItem);
-      end else begin
-        MustUpdate := DoExpandItem(PItem);
+        mustUpdate := DoCollapseItem(pItem);
+      end else
+      begin
+        mustUpdate := DoExpandItem(pItem);
       end;
     end;
 
-    if MustUpdate then begin
+    if mustUpdate then
+    begin
       // UpdateProperties(False);
       UpdateVisibleItems;
       UpdateScrollBar;
 
-      if Index = FSelectedIndex then
+      if idx = FSelectedIndex then
         Invalidate; // SelectItem will not Invalidate!
     end;
 
     FClickTime := GetTickCount;
-    SelectItem(Index);
+    SelectItem(idx);
 
-    if PItem.IsCategory then
+    if pItem.IsCategory then
       Exit;
   end;
 
-  if Index > - 1 then begin
-    if not ExtraRect[Index].IsEmpty then begin
-      if ExtraRect[Index].Contains(P) then
-        FExtraRectIndex := Index;
+  if idx > - 1 then
+  begin
+    if not ExtraRect[idx].IsEmpty then
+    begin
+      if ExtraRect[idx].Contains(pt) then
+        FExtraRectIndex := idx;
     end;
   end;
 end;
 
-procedure TwxCustomObjectInspector.MouseMove(Shift: TShiftState; X, Y: Integer);
+procedure TwxCustomObjectInspector.MouseMove(AShift: TShiftState; AX, AY: Integer);
 var
-  Index: Integer;
+  idx: Integer;
   w: Integer;
-  P: TPoint;
-  R: TRect;
-  PItem: PwxPropertyItem;
-  MustShow: Boolean;
+  pt: TPoint;
+  rect: TRect;
+  pItem: PwxPropertyItem;
+  mustShow: Boolean;
 begin
   inherited;
 
   if not FShowItemHint then
     Exit;
 
-  P := Point(X, Y);
-  Index := IndexFromPoint(P);
+  pt := Point(AX, AY);
+  idx := IndexFromPoint(pt);
 
-  if (Index > - 1) and (FPrevHintIndex <> Index) and (FPropsNeedHint or FValuesNeedHint) then begin
+  if (idx > - 1) and (FPrevHintIndex <> idx) and (FPropsNeedHint or FValuesNeedHint) then
+  begin
     { Avoid this loop when there is no reason !
       ==> (FPropsNeedHint or FValuesNeedHint) must be True
       in order to show hint .
       ==> Check PaintItem routines !
     }
     ShowHint := False;
-    FPrevHintIndex := Index;
-    PItem := VisibleItems[Index];
+    FPrevHintIndex := idx;
+    pItem := VisibleItems[idx];
 
-    if PItem^.IsCategory then
+    if pItem^.IsCategory then
       Exit;
 
-    R := ValueRect[Index];
+    rect := ValueRect[idx];
     FIsItemHint := True;
 
-    if R.Contains(P) then begin
+    if rect.Contains(pt) then
+    begin
       FBoldHint := False;
-      R := ValueTextRect[Index];
-      Hint := PItem.ValueAsstring;
+      rect := ValueTextRect[idx];
+      Hint := pItem.ValueAsstring;
       w := Canvas.TextWidth(Hint);
-      MustShow := R.Width <= w;
-    end else begin
-      R := PropTextRect[Index];
-      Hint := PItem.Name;
-      FBoldHint := IsValueNotDefault(PItem^.QualifiedName, PItem^.ValueAsstring);
+      mustShow := rect.Width <= w;
+    end else
+    begin
+      rect := PropTextRect[idx];
+      Hint := pItem.Name;
+      FBoldHint := IsValueNotDefault(pItem^.QualifiedName, pItem^.ValueAsstring);
       w := Canvas.TextWidth(Hint);
-      MustShow := R.Width <= w;
+      mustShow := rect.Width <= w;
     end;
 
-    ShowHint := MustShow;
+    ShowHint := mustShow;
 
-    if ShowHint then begin
-      P.X := R.Left;
-      P.Y := R.Top;
-      P := ClientToScreen(P);
-      FHintPoint := P;
+    if ShowHint then
+    begin
+      pt.X := rect.Left;
+      pt.Y := rect.Top;
+      pt := ClientToScreen(pt);
+      FHintPoint := pt;
     end;
   end;
 end;
@@ -4794,16 +4922,17 @@ end;
 procedure TwxCustomObjectInspector.Paint;
 var
   I: Integer;
-  PItem: PwxPropertyItem;
-  FirstIndex, LastIndex: Integer;
+  pItem: PwxPropertyItem;
+  firstIndex, lastIndex: Integer;
 begin
   inherited;
-  FirstIndex := FirstItemIndex;
-  LastIndex := LastItemIndex;
+  firstIndex := FirstItemIndex;
+  lastIndex := LastItemIndex;
 
-  for I := FirstIndex to LastIndex do begin
-    PItem := VisibleItems[I];
-    if PItem^.IsCategory then
+  for I := firstIndex to lastIndex do
+  begin
+    pItem := VisibleItems[I];
+    if pItem^.IsCategory then
       PaintCategory(I);
   end;
 
@@ -4812,34 +4941,35 @@ end;
 
 procedure TwxCustomObjectInspector.PaintCategory(AIndex: Integer);
 var
-  PItem: PwxPropertyItem;
-  R: TRect;
-  LDetails: TThemedElementDetails;
-  LColor, LTxtColor: TColor;
+  pItem: PwxPropertyItem;
+  rect: TRect;
+  details: TThemedElementDetails;
+  color, txtColor: TColor;
 begin
   CanvasStack.Push(Canvas);
 
-  LDetails := StyleServices.GetElementDetails(tcbCategoryNormal);
-  PItem := VisibleItems[AIndex];
-  R := ItemRect[AIndex];
-  Inc(R.Left, FGutterWidth + 1);
-  LColor := FCategoryColor;
+  details := StyleServices.GetElementDetails(tcbCategoryNormal);
+  pItem := VisibleItems[AIndex];
+  rect := ItemRect[AIndex];
+  Inc(rect.Left, FGutterWidth + 1);
+  color := FCategoryColor;
 
   if UseStyleColor then
-    LColor := StyleServices.GetStyleColor(scCategoryButtons);
+    color := StyleServices.GetStyleColor(scCategoryButtons);
 
-  Canvas.Brush.Color := LColor;
-  Canvas.FillRect(R);
-  LTxtColor := FCategoryTextColor;
+  Canvas.Brush.Color := color;
+  Canvas.FillRect(rect);
+  txtColor := FCategoryTextColor;
 
   if UseStyleColor then
-    if StyleServices.GetElementColor(LDetails, ecTextColor, LColor) then
-      if LColor <> clNone then LTxtColor := LColor;
+    if StyleServices.GetElementColor(details, ecTextColor, color) then
+      if color <> clNone then
+        txtColor := color;
 
-  Canvas.Font.Color := LTxtColor;
+  Canvas.Font.Color := txtColor;
   Canvas.Font.Style := Canvas.Font.Style + [fsBold];
-  Inc(R.Left, FSepTxtDis);
-  DrawText(Canvas.Handle, PItem^.Name, - 1, R, DT_LEFT or DT_SINGLELINE or DT_VCENTER);
+  Inc(rect.Left, FSepTxtDis);
+  DrawText(Canvas.Handle, pItem^.Name, - 1, rect, DT_LEFT or DT_SINGLELINE or DT_VCENTER);
   Canvas.Font.Style := Canvas.Font.Style - [fsBold];
   CanvasStack.Pop;
 end;
@@ -4847,58 +4977,62 @@ end;
 procedure TwxCustomObjectInspector.PaintItem(AIndex: Integer);
 var
   X, Y, cY: Integer;
-  R, pmR: TRect;
-  vIndex, POrd: Integer;
-  PItem: PwxPropertyItem;
+  r, pmR: TRect;
+  vIndex, pOrd: Integer;
+  pItem: PwxPropertyItem;
   pOrdPos: Integer;
-  DYT, DYB, PrevPos, NextPos: Integer; // delta Y top, delta Y Bottom
-  PropName: string;
-  PPrevItem, PNextItem: PwxPropertyItem;
+  dYT, dYB, prevPos, nextPos: Integer; // delta Y top, delta Y Bottom
+  propName: string;
+  pPrevItem, pNextItem: PwxPropertyItem;
   xMax, xMin: Integer;
-  HasPlusMinus: Boolean;
-  LSaveColor: TColor;
-  LColor: TColor;
-  HorzDotLeft: Integer;
+  hasPlusMinus: Boolean;
+  savedColor: TColor;
+  lolor: TColor;
+  horzDotLeft: Integer;
 begin
 
-  if AIndex = FirstItemIndex then begin
+  if AIndex = FirstItemIndex then
+  begin
     FPropsNeedHint := False;
     FValuesNeedHint := False;
   end;
 
-  PItem := VisibleItems.Items[AIndex];
+  pItem := VisibleItems.Items[AIndex];
   vIndex := IndexToVirtualIndex(AIndex);
-  HasPlusMinus := False;
+  hasPlusMinus := False;
   Y := ItemTop(vIndex);
-  POrd := ItemOrder(PItem);
-  pOrdPos := (POrd * FGutterWidth) + FGutterWidth;
-  R := Rect(0, Y, pOrdPos, Y + ItemHeight);
+  pOrd := ItemOrder(pItem);
+  pOrdPos := (pOrd * FGutterWidth) + FGutterWidth;
+  r := Rect(0, Y, pOrdPos, Y + ItemHeight);
 
   if AIndex = VisibleItems.Count - 1 then
-    R.Height := Height;
+    r.Height := Height;
 
   { Background color => will be used to paint property text . }
-  LSaveColor := Canvas.Brush.Color;
-  LColor := FGutterColor;
+  savedColor := Canvas.Brush.Color;
+  lolor := FGutterColor;
 
   if UseStyleColor then
-    LColor := StyleServices.GetSystemColor(clBtnHighlight);
+    lolor := StyleServices.GetSystemColor(clBtnHighlight);
 
-  Canvas.Brush.Color := LColor;
-  Canvas.FillRect(R);
+  Canvas.Brush.Color := lolor;
+  Canvas.FillRect(r);
   pmR := PlusMinBtnRect[AIndex];
 
-  if PItem^.HasChild and (not CircularLinkedProperties.Contains(PItem^.QualifiedName)) then begin
-    DrawExpandbutton(Canvas, pmR.Left, pmR.Top, not PItem.Expanded, pmR.Width);
-    HasPlusMinus := True;
+  if pItem^.HasChild and (not CircularLinkedProperties.Contains(pItem^.QualifiedName)) then
+  begin
+    DrawExpandbutton(Canvas, pmR.Left, pmR.Top, not pItem.Expanded, pmR.Width);
+    hasPlusMinus := True;
   end;
 
-  if not PItem^.IsCategory then begin
-    if CanDrawChevron(AIndex) then begin
+  if not pItem^.IsCategory then
+  begin
+    if CanDrawChevron(AIndex) then
+    begin
       cY := CenterPoint(pmR).Y - TwxObjectInspectorButton.ScaledArrowSize;
       X := pOrdPos - (TwxObjectInspectorButton.ScaledArrowSize * 2) - 1; // pOrdPos - (>>)-1
-      // cY:=R.Top;
-      if HasPlusMinus then
+      // cY:=r.Top;
+      if hasPlusMinus then
         Dec(X, ValueManager.MinimumPlusSignWidth + 2);
 
       Canvas.Pen.Color := clWindowText;
@@ -4910,75 +5044,80 @@ begin
     end;
 
     if Assigned(OnGetItemFriendlyName) then
-      PropName := OnGetItemFriendlyName(Self, PItem)
+      propName := OnGetItemFriendlyName(Self, pItem)
     else
-      PropName := PItem.Name;
+      propName := pItem.Name;
 
     X := pOrdPos + 4;
 
-    if FShowGridLines then begin
+    if FShowGridLines then
+    begin
       Canvas.Pen.Color := FGridColor;
       DrawHorizontalDottedLine(Canvas, pOrdPos + 1, Y, SplitterPos);
     end;
 
-    if FSelectedIndex = AIndex then begin
-      R := Rect(pOrdPos + 1, Y + 1, SplitterPos, Y + ItemHeight);
-      LColor := FHighlightColor;
+    if FSelectedIndex = AIndex then
+    begin
+      r := Rect(pOrdPos + 1, Y + 1, SplitterPos, Y + ItemHeight);
+      lolor := FHighlightColor;
 
       if UseStyleColor then
-        LColor := StyleServices.GetSystemColor(clHighlight);
+        lolor := StyleServices.GetSystemColor(clHighlight);
 
-      Canvas.Brush.Color := LColor;
-      Canvas.FillRect(R);
-    end else begin
-      Canvas.Brush.Color := LSaveColor;
+      Canvas.Brush.Color := lolor;
+      Canvas.FillRect(r);
+    end else
+    begin
+      Canvas.Brush.Color := savedColor;
     end;
 
-    R := Rect(X, Y, SplitterPos, Y + ItemHeight);
-    LColor := FNameColor;
+    r := Rect(X, Y, SplitterPos, Y + ItemHeight);
+    lolor := FNameColor;
 
     // Canvas.Font.Color := clFuchsia;
     if UseStyleColor then
-      LColor := StyleServices.GetSystemColor(clBtnText);
+      lolor := StyleServices.GetSystemColor(clBtnText);
 
-    Canvas.Font.Color := LColor;
+    Canvas.Font.Color := lolor;
 
-    if (PItem.Instance is TComponent) and (PItem^.Instance <> PItem^.Component) then
+    if (pItem.Instance is TComponent) and (pItem^.Instance <> pItem^.Component) then
       Canvas.Font.Color := FSubPropertiesColor;
 
-    if IsPropTypeDerivedFromClass(PItem^.AssociatedProperty.PropertyType, TComponent) then
+    if IsPropTypeDerivedFromClass(pItem^.AssociatedProperty.PropertyType, TComponent) then
       Canvas.Font.Color := FReferencesColor;
 
-    if (not PItem.AssociatedProperty.IsWritable) and (not PItem^.IsClass) then
+    if (not pItem.AssociatedProperty.IsWritable) and (not pItem^.IsClass) then
       Canvas.Font.Color := FReadOnlyColor;
 
     Canvas.Refresh;
-    R := PropTextRect[AIndex];
-    DrawText(Canvas.Handle, PropName, - 1, R, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
+    r := PropTextRect[AIndex];
+    DrawText(Canvas.Handle, propName, - 1, r, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
 
-    if Canvas.TextWidth(PropName) > R.Width then
+    if Canvas.TextWidth(propName) > r.Width then
       FPropsNeedHint := True;
 
-    Canvas.Brush.Color := LSaveColor;
+    Canvas.Brush.Color := savedColor;
     { ====> Paint Item Value <==== }
-    PaintItemValue(PItem, AIndex);
+    PaintItemValue(pItem, AIndex);
 
-    if Canvas.TextWidth(PItem^.ValueAsstring) > ValueTextRect[AIndex].Width then
+    if Canvas.TextWidth(pItem^.ValueAsstring) > ValueTextRect[AIndex].Width then
       FValuesNeedHint := True;
 
-    Canvas.Brush.Color := LSaveColor;
+    Canvas.Brush.Color := savedColor;
     Canvas.Pen.Color := FGridColor;
-    HorzDotLeft := ValueManager.GetExtraRectWidth(PItem);
+    horzDotLeft := ValueManager.GetExtraRectWidth(pItem);
 
-    if HorzDotLeft > 0 then
-      HorzDotLeft := ValueTextRect[AIndex].Left
+    if horzDotLeft > 0 then
+      horzDotLeft := ValueTextRect[AIndex].Left
     else
-      HorzDotLeft := SplitterPos;
+      horzDotLeft := SplitterPos;
 
-    if (FSelectedIndex = AIndex) then begin
-      DrawHorizontalDottedLine(Canvas, HorzDotLeft, Y, Width);
-      DrawHorizontalDottedLine(Canvas, HorzDotLeft, Y + ItemHeight, Width);
-    end else begin
+    if (FSelectedIndex = AIndex) then
+    begin
+      DrawHorizontalDottedLine(Canvas, horzDotLeft, Y, Width);
+      DrawHorizontalDottedLine(Canvas, horzDotLeft, Y + ItemHeight, Width);
+    end else
+    begin
       if FShowGridLines then
         DrawHorizontalDottedLine(Canvas, SplitterPos, Y, Width);
     end;
@@ -4989,55 +5128,61 @@ begin
     Exit;
 
   // Canvas.Pen.Color := clFuchsia;
-  LColor := FGutterEdgeColor;
+  lolor := FGutterEdgeColor;
 
   if UseStyleColor then
-    LColor := StyleServices.GetStyleColor(scSplitter);
+    lolor := StyleServices.GetStyleColor(scSplitter);
 
-  Canvas.Pen.Color := LColor;
+  Canvas.Pen.Color := lolor;
   Canvas.Refresh;
-  DYT := 0;
-  DYB := 0;
+  dYT := 0;
+  dYB := 0;
 
-  if (AIndex - 1) >= 0 then begin
-    PPrevItem := VisibleItems.Items[AIndex - 1];
-    PrevPos := (ItemOrder(PPrevItem) * FGutterWidth) + FGutterWidth;
-    xMax := max(pOrdPos, PrevPos);
-    xMin := min(pOrdPos, PrevPos);
+  if (AIndex - 1) >= 0 then
+  begin
+    pPrevItem := VisibleItems.Items[AIndex - 1];
+    prevPos := (ItemOrder(pPrevItem) * FGutterWidth) + FGutterWidth;
+    xMax := max(pOrdPos, prevPos);
+    xMin := min(pOrdPos, prevPos);
 
-    if PrevPos < pOrdPos then begin
+    if prevPos < pOrdPos then
+    begin
       Canvas.MoveTo(xMin, Y - 0);     // Control the edge shape: Y - 0: squre edge
       Canvas.LineTo(xMin + 2, Y);
       Canvas.MoveTo(xMin + 2, Y);
       Canvas.LineTo(xMax - 2, Y);
       Canvas.MoveTo(xMax - 2, Y);
       Canvas.LineTo(xMax, Y + 0);    // Control the edge shape: Y + 0: squre edge
-      //DYT := 2;
-    end else begin
-      if PrevPos > pOrdPos then begin
+      //dYT := 2;
+    end else
+    begin
+      if prevPos > pOrdPos then
+      begin
         Canvas.MoveTo(xMax, Y - 0);  // Control the edge shape: Y - 0: squre edge
         Canvas.LineTo(xMax - 2, Y);
         Canvas.MoveTo(xMax - 2, Y);
         Canvas.LineTo(xMin + 2, Y);
         Canvas.MoveTo(xMin + 2, Y);
         Canvas.LineTo(xMin, Y + 0);  // Control the edge shape: Y + 0: squre edge
-        //DYT := 2;
+        //dYT := 2;
       end;
     end;
   end;
 
-  Canvas.MoveTo(pOrdPos, Y + DYT);
+  Canvas.MoveTo(pOrdPos, Y + dYT);
 
-  if (AIndex + 1) < VisibleItems.Count then begin
-    PNextItem := VisibleItems.Items[AIndex + 1];
-    NextPos := (ItemOrder(PNextItem) * FGutterWidth) + FGutterWidth;
-    if pOrdPos <> NextPos then DYB := 0; // DYB = 2 changed to DYB = 0
+  if (AIndex + 1) < VisibleItems.Count then
+  begin
+    pNextItem := VisibleItems.Items[AIndex + 1];
+    nextPos := (ItemOrder(pNextItem) * FGutterWidth) + FGutterWidth;
+    if pOrdPos <> nextPos then dYB := 0; // dYB = 2 changed to dYB = 0
   end;
 
-  Canvas.LineTo(pOrdPos, Y + ItemHeight - DYB);
+  Canvas.LineTo(pOrdPos, Y + ItemHeight - dYB);
 
-  if (AIndex = VisibleItems.Count - 1) then begin
-    Canvas.MoveTo(pOrdPos, Y + ItemHeight - DYB);
+  if (AIndex = VisibleItems.Count - 1) then
+  begin
+    Canvas.MoveTo(pOrdPos, Y + ItemHeight - dYB);
     Canvas.LineTo(pOrdPos, Height);
   end;
 end;
@@ -5047,27 +5192,28 @@ procedure TwxCustomObjectInspector.PaintItemValue(APropItem: PwxPropertyItem; AI
   var
     boolVal: Boolean;
     colorRectColor: TColor;
-    DC: HDC;
+    dc: HDC;
     details: TThemedElementDetails;
-    ExtraRect: TRect;
-    Inspector: TwxCustomObjectInspector;
+    extraRect: TRect;
+    inspector: TwxCustomObjectInspector;
     itemValue: TValue;
-    QualifiedName: string;
-    Style: TCustomStyleServices;
-    ValueColor: TColor;
-    ValueName: string;
+    qualifiedName: string;
+    style: TCustomStyleServices;
+    valueColor: TColor;
+    valueName: string;
     valueType: PropertyItemValueType;
   begin
     boolVal := False;
-    DC := ACanvas.Handle;
-    Inspector := Self;
+    dc := ACanvas.Handle;
+    inspector := Self;
     itemValue := AItem.Value;
-    Style := StyleServices;
+    style := StyleServices;
     valueType := ValueManager.GetValueType(AItem);
 
-    Inspector.CanvasStack.Push(ACanvas);
+    inspector.CanvasStack.Push(ACanvas);
 
-    if (valueType = vtBool) or (valueType = vtSetElement) then begin
+    if (valueType = vtBool) or (valueType = vtSetElement) then
+    begin
       case valueType of
         vtBool:
           boolVal := TValueConverter.GetValueAs<Boolean>(itemValue);
@@ -5076,53 +5222,56 @@ procedure TwxCustomObjectInspector.PaintItemValue(APropItem: PwxPropertyItem; AI
       end;
 
       if boolVal then
-        details := Style.GetElementDetails(tbCheckBoxCheckedNormal)
+        details := style.GetElementDetails(tbCheckBoxCheckedNormal)
       else
-        details := Style.GetElementDetails(tbCheckBoxUnCheckedNormal);
+        details := style.GetElementDetails(tbCheckBoxUnCheckedNormal);
 
-      ExtraRect := Inspector.ExtraRect[AIndex];
-      Style.DrawElement(DC, details, ExtraRect);
-    end else begin
-      if valueType = vtColor then begin
+      extraRect := inspector.extraRect[AIndex];
+      style.DrawElement(dc, details, extraRect);
+    end else
+    begin
+      if valueType = vtColor then
+      begin
         colorRectColor := TValueConverter.GetValueAs<TColor>(itemValue);
-        ExtraRect := Inspector.ExtraRect[AIndex];
+        extraRect := inspector.extraRect[AIndex];
 
-        if Inspector.SelectedIndex = AIndex then
-          InflateRect(ExtraRect, - 1, - 1);
+        if inspector.SelectedIndex = AIndex then
+          InflateRect(extraRect, - 1, - 1);
 
-        FillRectWithBorderColor(DC, ExtraRect, ColorToRGB(colorRectColor), clBlack, 1);
+        FillRectWithBorderColor(dc, extraRect, ColorToRGB(colorRectColor), clBlack, 1);
       end;
     end;
 
-    Inspector.CanvasStack.Pop;
+    inspector.CanvasStack.Pop;
 
-    QualifiedName := AItem^.QualifiedName;
-    ValueName := AItem^.ValueAsstring;
+    qualifiedName := AItem^.qualifiedName;
+    valueName := AItem^.ValueAsstring;
 
-    ValueColor := Inspector.ValueColor;
+    valueColor := inspector.valueColor;
 
-    if Inspector.UseStyleColor then
-      ValueColor := StyleServices.GetSystemColor(clBtnText);
+    if inspector.UseStyleColor then
+      valueColor := StyleServices.GetSystemColor(clBtnText);
 
-    ACanvas.Font.Color := ValueColor;
-    ACanvas.Font.Style := ACanvas.Font.Style - [fsBold];
+    ACanvas.Font.Color := valueColor;
+    ACanvas.Font.style := ACanvas.Font.style - [fsBold];
 
-    if Inspector.IsValueNotDefault(QualifiedName, ValueName) then begin
-      if not Inspector.UseStyleColor then
-        ACanvas.Font.Color := Inspector.NonDefaultValueColor;
-      if Inspector.BoldNonDefaultValue then
-        ACanvas.Font.Style := [fsBold];
+    if inspector.IsValueNotDefault(qualifiedName, valueName) then
+    begin
+      if not inspector.UseStyleColor then
+        ACanvas.Font.Color := inspector.NonDefaultValueColor;
+      if inspector.BoldNonDefaultValue then
+        ACanvas.Font.style := [fsBold];
     end;
 
-    ARect := Inspector.ValueTextRect[AIndex];
-    DrawText(ACanvas.Handle, ValueName, - 1, ARect, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
+    ARect := inspector.ValueTextRect[AIndex];
+    DrawText(ACanvas.Handle, valueName, - 1, ARect, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
   end;
 var
-  rect: TRect;
+  r: TRect;
 begin
   CanvasStack.Push(Canvas);
-  rect := ValueRect[AIndex];
-  doPaintItemValue(Canvas, AIndex, APropItem, rect);
+  r := ValueRect[AIndex];
+  doPaintItemValue(Canvas, AIndex, APropItem, r);
   CanvasStack.Pop;
 end;
 
@@ -5150,8 +5299,10 @@ begin
     Exit;
   end;
 
-  if (AIndex < VisibleItems.Count) then begin
-    if (AIndex <> FSelectedIndex) then begin
+  if (AIndex < VisibleItems.Count) then
+  begin
+    if (AIndex <> FSelectedIndex) then
+    begin
 
       if Assigned(FOnSelectItem) then
         if not FOnSelectItem(Self, VisibleItems.Items[AIndex]) then
@@ -5161,12 +5312,15 @@ begin
       LSI.fMask := SIF_POS;
       FSelectedIndex := AIndex;
 
-      if (FSelectedIndex < FirstItemIndex) then begin
+      if (FSelectedIndex < FirstItemIndex) then
+      begin
         { Index out of page => Need to scroll ! }
         LSI.nPos := FSelectedIndex;
         DoSetScrollInfo;
-      end else begin
-        if (FSelectedIndex > LastItemIndex - 1) then begin
+      end else
+      begin
+        if (FSelectedIndex > LastItemIndex - 1) then
+        begin
           { Index out of page => Need to scroll ! }
           LSI.nPos := 1 + FSelectedIndex - MaxItemCount;
           DoSetScrollInfo;
@@ -5213,9 +5367,9 @@ end;
 
 procedure TwxCustomObjectInspector.UpdateEditControl(const AIsSetValue: Boolean);
 var
-  PItem: PwxPropertyItem;
-  BtnWidth: Integer;
-  LTxtValRect: TRect;
+  pItem: PwxPropertyItem;
+  btnWidth: Integer;
+  txtValRect: TRect;
 begin
   if Assigned(FPropInspEdit) and Assigned(FPropInspEdit.Parent) then begin
     FPropInspEdit.PropertyItem := nil;
@@ -5226,33 +5380,35 @@ begin
     Exit;
 
   UpdateSelIndex;
-  PItem := SelectedItem;
+  pItem := SelectedItem;
 
-  if Assigned(PItem) then begin
-    if PItem^.IsCategory then begin
+  if Assigned(pItem) then
+  begin
+    if pItem^.IsCategory then
+    begin
       if FPropInspEdit.Visible then
         FPropInspEdit.Visible := False;
 
       Exit;
     end;
 
-    LTxtValRect := ValueTextRect[FSelectedIndex];
+    txtValRect := ValueTextRect[FSelectedIndex];
 
     if AIsSetValue and FPropInspEdit.Visible and (Assigned(FPropInspEdit.PropertyItem)) then
       FPropInspEdit.SetValueFromEdit;
 
-    FPropInspEdit.PropertyItem := PItem;
+    FPropInspEdit.PropertyItem := pItem;
     //with ValueRect[FSelectedIndex] do
     begin
-      if ValueManager.HasButton(PItem) then
-        BtnWidth := TwxObjectInspectorButton.ScaledWidth // 17
+      if ValueManager.HasButton(pItem) then
+        btnWidth := TwxObjectInspectorButton.ScaledWidth // 17
       else
-        BtnWidth := 0;
+        btnWidth := 0;
 
-      FPropInspEdit.Left := LTxtValRect.Left;
-      FPropInspEdit.Top := LTxtValRect.Top + 3;
+      FPropInspEdit.Left := txtValRect.Left;
+      FPropInspEdit.Top := txtValRect.Top + 3;
 
-      FPropInspEdit.Width := LTxtValRect.Width - BtnWidth;
+      FPropInspEdit.Width := txtValRect.Width - btnWidth;
       FPropInspEdit.Height := ValueRect[FSelectedIndex].Height - 3;
     end;
 
@@ -5280,7 +5436,8 @@ var
 begin
   P := SelectedItem;
 
-  if Assigned(P) then begin
+  if Assigned(P) then
+  begin
     FSelectedIndex := VisibleItems.IndexOf(P);
     SelectItem(FSelectedIndex);
   end;
@@ -5293,16 +5450,22 @@ begin
   inherited;
   parentForm := GetComponentParentForm(Self);
 
-  if Assigned(parentForm) then begin
-    if FAllowSearch and (AMessage.HotKey = 0) then begin// HotKey is the id of the Hot Key.
-      if Assigned(parentForm.ActiveControl) then begin
-        if (ContainsWindow(parentForm.ActiveControl.Handle, Handle)) then begin
+  if Assigned(parentForm) then
+  begin
+    if FAllowSearch and (AMessage.HotKey = 0) then
+    begin// HotKey is the id of the Hot Key.
+      if Assigned(parentForm.ActiveControl) then
+      begin
+        if (ContainsWindow(parentForm.ActiveControl.Handle, Handle)) then
+        begin
           // ActiveControl.Handle is Edit, Handle is Inspector. GetCaretWnd will return the Edit
           // Handle too. So GetCaretWnd = Handle will never be true.
-          if GetCaretWnd = Handle then begin // searching
+          if GetCaretWnd = Handle then
+          begin // searching
             FSearchText := '';
             UpdateEditControl; // move back to Edit
-          end else begin
+          end else
+          begin
             // This will move the caret to the inspector property name column; Edit will lost focus
             // leading to Edit.WMKillFocus where Hot Key is unregistered.
             if DoSelectCaret(FSelectedIndex) then
@@ -5332,13 +5495,14 @@ end;
 
 procedure TwxCustomObjectInspector.WMLButtonUp(var AMessage: TWMLButtonUp);
 var
-  P: TPoint;
+  pt: TPoint;
 begin
   inherited;
-  P := Point(AMessage.XPos, AMessage.YPos);
+  pt := Point(AMessage.XPos, AMessage.YPos);
 
-  if (FExtraRectIndex > - 1) and not (ExtraRect[FExtraRectIndex].IsEmpty) then begin
-    if ExtraRect[FExtraRectIndex].Contains(P) then
+  if (FExtraRectIndex > - 1) and not (ExtraRect[FExtraRectIndex].IsEmpty) then
+  begin
+    if ExtraRect[FExtraRectIndex].Contains(pt) then
       DoExtraRectClick;
   end;
 end;
@@ -5367,149 +5531,160 @@ begin
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_AllowSearch(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_AllowSearch(const AValue: Boolean);
 begin
-  if FAllowSearch <> Value then begin
-    FAllowSearch := Value;
-  end;
+  if FAllowSearch <> AValue then
+    FAllowSearch := AValue;
 end;
 
-procedure TwxCustomObjectInspector.Set_BoldNonDefaultValue(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_BoldNonDefaultValue(const AValue: Boolean);
 begin
-  if Value <> FBoldNonDefaultValue then begin
-    FBoldNonDefaultValue := Value;
+  if AValue <> FBoldNonDefaultValue then
+  begin
+    FBoldNonDefaultValue := AValue;
     Invalidate;
   end;
 end;
 
-function TwxCustomObjectInspector.Get_ExtraRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ExtraRect(AIndex: Integer): TRect;
 var
   w: Integer;
-  PItem: PwxPropertyItem;
-  R: TRect;
+  pItem: PwxPropertyItem;
+  r: TRect;
 begin
   Result := TRect.Empty;
-  PItem := VisibleItems[Index];
-  w := ValueManager.GetExtraRectWidth(PItem);
+  pItem := VisibleItems[AIndex];
+  w := ValueManager.GetExtraRectWidth(pItem);
 
-  if w > 0 then begin
-    R := ValueRect[Index];
+  if w > 0 then
+  begin
+    r := ValueRect[AIndex];
     Result := Rect(0, 0, w, w);
-    MoveRectToBoundVCenter(Result, R);
+    MoveRectToBoundVCenter(Result, r);
     Result.Width := w;
     Result.Height := w;
     OffsetRect(Result, FSepTxtDis, 0);
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_GridColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_GridColor(const AValue: TColor);
 begin
-  if FGridColor <> Value then begin
-    FGridColor := Value;
+  if FGridColor <> AValue then
+  begin
+    FGridColor := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_GutterColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_GutterColor(const AValue: TColor);
 begin
-  if Value <> FGutterColor then begin
-    FGutterColor := Value;
+  if AValue <> FGutterColor then
+  begin
+    FGutterColor := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_GutterEdgeColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_GutterEdgeColor(const AValue: TColor);
 begin
-  if Value <> FGutterEdgeColor then begin
-    FGutterEdgeColor := Value;
+  if AValue <> FGutterEdgeColor then
+  begin
+    FGutterEdgeColor := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_GutterWidth(const Value: Integer);
+procedure TwxCustomObjectInspector.Set_GutterWidth(const AValue: Integer);
 begin
-  if Value > ValueManager.MaximumGutterWidth then
+  if AValue > ValueManager.MaximumGutterWidth then
     raise EInvalidGutterWidth.Create;
 
-  if FGutterWidth <> Value then begin
-    FGutterWidth := Value;
+  if FGutterWidth <> AValue then
+  begin
+    FGutterWidth := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_HighlightColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_HighlightColor(const AValue: TColor);
 begin
-  if Value <> FHighlightColor then begin
-    FHighlightColor := Value;
+  if AValue <> FHighlightColor then
+  begin
+    FHighlightColor := AValue;
     Invalidate;
   end;
 end;
 
-function TwxCustomObjectInspector.Get_ItemRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ItemRect(AIndex: Integer): TRect;
 var
   vIndex, Y: Integer;
 begin
   Result := TRect.Empty;
 
-  if Index > - 1 then begin
-    vIndex := IndexToVirtualIndex(Index);
+  if AIndex > - 1 then
+  begin
+    vIndex := IndexToVirtualIndex(AIndex);
     Y := ItemTop(vIndex);
     Result := Rect(0, Y, Width, Y + ItemHeight);
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_NameColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_NameColor(const AValue: TColor);
 begin
-  if Value <> FNameColor then begin
-    FNameColor := Value;
+  if AValue <> FNameColor then
+  begin
+    FNameColor := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_NonDefaultValueColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_NonDefaultValueColor(const AValue: TColor);
 begin
-  if Value <> FNonDefaultValueColor then begin
-    FNonDefaultValueColor := Value;
+  if AValue <> FNonDefaultValueColor then
+  begin
+    FNonDefaultValueColor := AValue;
     Invalidate;
   end;
 end;
 
-function TwxCustomObjectInspector.Get_PlusMinBtnRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_PlusMinBtnRect(AIndex: Integer): TRect;
 var
   X, Y: Integer;
-  pOrdPos, POrd: Integer;
-  R: TRect;
+  pOrdPos, pOrd: Integer;
+  r: TRect;
   cY: Integer;
 begin
   Result := TRect.Empty;
-  POrd := ItemOrder(VisibleItems.Items[Index]);
-  pOrdPos := (POrd * FGutterWidth) + FGutterWidth;
+  pOrd := ItemOrder(VisibleItems.Items[AIndex]);
+  pOrdPos := (pOrd * FGutterWidth) + FGutterWidth;
   X := (pOrdPos - ValueManager.MinimumPlusSignWidth) - 3;
-  Y := ItemTop(IndexToVirtualIndex(Index));
-  R := Rect(0, Y, pOrdPos, Y + ItemHeight);
-  cY := CenterPoint(R).Y - (ValueManager.MinimumPlusSignWidth div 2);
+  Y := ItemTop(IndexToVirtualIndex(AIndex));
+  r := Rect(0, Y, pOrdPos, Y + ItemHeight);
+  cY := CenterPoint(r).Y - (ValueManager.MinimumPlusSignWidth div 2);
   Result := Rect(X, cY, X + ValueManager.MinimumPlusSignWidth, cY + ValueManager.MinimumPlusSignWidth);
 end;
 
-function TwxCustomObjectInspector.Get_PropTextRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_PropTextRect(AIndex: Integer): TRect;
 begin
-  Result := ItemRect[Index];
-  Result.Left := (ItemOrder(VisibleItems[Index]) * FGutterWidth) + FGutterWidth + FSepTxtDis;
+  Result := ItemRect[AIndex];
+  Result.Left := (ItemOrder(VisibleItems[AIndex]) * FGutterWidth) + FGutterWidth + FSepTxtDis;
   Result.Right := SplitterPos;
 end;
 
-procedure TwxCustomObjectInspector.Set_ReadOnlyColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_ReadOnlyColor(const AValue: TColor);
 begin
-  if FReadOnlyColor <> Value then begin
-    FReadOnlyColor := Value;
+  if FReadOnlyColor <> AValue then
+  begin
+    FReadOnlyColor := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_ReferencesColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_ReferencesColor(const AValue: TColor);
 begin
-  if Value <> FReferencesColor then begin
-    FReferencesColor := Value;
+  if AValue <> FReferencesColor then
+  begin
+    FReferencesColor := AValue;
     Invalidate;
   end;
 end;
@@ -5528,57 +5703,61 @@ begin
     Result := Items.Items[L];
 end;
 
-procedure TwxCustomObjectInspector.Set_ShowGridLines(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_ShowGridLines(const AValue: Boolean);
 begin
-  if Value <> FShowGridLines then begin
-    FShowGridLines := Value;
+  if AValue <> FShowGridLines then begin
+    FShowGridLines := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_ShowGutter(const Value: Boolean);
+procedure TwxCustomObjectInspector.Set_ShowGutter(const AValue: Boolean);
 begin
-  if Value <> FShowGutter then begin
-    FShowGutter := Value;
+  if AValue <> FShowGutter then
+  begin
+    FShowGutter := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_SubPropertiesColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_SubPropertiesColor(const AValue: TColor);
 begin
-  if Value <> FSubPropertiesColor then begin
-    FSubPropertiesColor := Value;
+  if AValue <> FSubPropertiesColor then
+  begin
+    FSubPropertiesColor := AValue;
     Invalidate;
   end;
 end;
 
-procedure TwxCustomObjectInspector.Set_ValueColor(const Value: TColor);
+procedure TwxCustomObjectInspector.Set_ValueColor(const AValue: TColor);
 begin
-  if Value <> FValueColor then begin
-    FValueColor := Value;
+  if AValue <> FValueColor then
+  begin
+    FValueColor := AValue;
     Invalidate;
   end;
 end;
 
-function TwxCustomObjectInspector.Get_ValueRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ValueRect(AIndex: Integer): TRect;
 var
-  vIndex, Y: Integer;
+  vIndex, y: Integer;
 begin
   Result := TRect.Empty;
 
-  if Index > - 1 then begin
-    vIndex := IndexToVirtualIndex(Index);
-    Y := ItemTop(vIndex);
-    Result := Rect(SplitterPos, Y, ClientWidth, Y + ItemHeight);
+  if AIndex > - 1 then
+  begin
+    vIndex := IndexToVirtualIndex(AIndex);
+    y := ItemTop(vIndex);
+    Result := Rect(SplitterPos, y, ClientWidth, y + ItemHeight);
   end;
 end;
 
-function TwxCustomObjectInspector.Get_ValueTextRect(Index: Integer): TRect;
+function TwxCustomObjectInspector.Get_ValueTextRect(AIndex: Integer): TRect;
 var
   w: Integer;
 begin
-  w := ExtraRect[Index].Width;
-  Result := ValueRect[Index];
+  w := ExtraRect[AIndex].Width;
+  Result := ValueRect[AIndex];
   Inc(Result.Left, FSepTxtDis);
   Inc(Result.Left, w);
 
@@ -5603,7 +5782,8 @@ end;
 
 procedure TwxObjectInspectorDialog.SetPropertyItem(const AItem: PwxPropertyItem);
 begin
-  if FPropertyItem <> AItem then begin
+  if FPropertyItem <> AItem then
+  begin
     FPropertyItem := AItem;
     Setup;
   end;

@@ -333,9 +333,12 @@ begin
 
   // Add matching child components of the parent form to the list. These components are candidate
   // to be assigned to the subject item.
-  if AItem.AssociatedProperty.PropertyType.TypeKind = tkClass then begin
-    if Assigned(parentForm) then begin
-      for I := 0 to parentForm.ComponentCount - 1 do begin
+  if AItem.AssociatedProperty.PropertyType.TypeKind = tkClass then
+  begin
+    if Assigned(parentForm) then
+    begin
+      for I := 0 to parentForm.ComponentCount - 1 do
+      begin
         if IsClassDerivedFromClass(parentForm.Components[I].ClassType, TRttiInstanceType(AItem.AssociatedProperty.PropertyType).MetaclassType) then
           AStrings.AddObject(parentForm.Components[I].Name, TObject(parentForm.Components[I]));
       end;
@@ -345,7 +348,8 @@ begin
   end;
 
   // Add event handlers
-  if AItem.AssociatedProperty.PropertyType.TypeKind = tkMethod then begin
+  if AItem.AssociatedProperty.PropertyType.TypeKind = tkMethod then
+  begin
     if Assigned(parentForm) then
       GetFormEventHandlers(parentForm, AItem.AssociatedProperty.PropertyType, AStrings);
 
@@ -353,19 +357,19 @@ begin
   end;
 
   // Add True/False
-  if AItem.IsSetElement then begin
+  if AItem.IsSetElement then
+  begin
     AStrings.AddObject(BoolToI18nStr(False), TObject(0));
     AStrings.AddObject(BoolToI18nStr(True),  TObject(1));
-
     Exit;
   end;
 
   // Add enumerated. Integer type is already filtered out because of HasList. So it must be
   // Enumerated type.
-  if AItem.AssociatedProperty.PropertyType.IsOrdinal then begin
+  if AItem.AssociatedProperty.PropertyType.IsOrdinal then
+  begin
     for I := AItem.Value.TypeData.MinValue to AItem.Value.TypeData.MaxValue do
       AStrings.AddObject(GetEnumName(AItem.Value.TypeInfo, I), TObject(I));
-
     Exit;
   end;
 end;
@@ -424,7 +428,8 @@ begin
       end;
   end;
 
-  if AItem.IsSetElement then begin
+  if AItem.IsSetElement then
+  begin
     Integer(intSet) := GetSetOrdinalValue(AItem.Value);
 
     if Boolean(AValue) then
@@ -522,7 +527,8 @@ begin
 
   Result := FEditors.ContainsKey(AItem.Value.TypeInfo);
 
-  if not Result then begin
+  if not Result then
+  begin
     rttiContext := TRttiContext.Create;
     rttiType := rttiContext.GetType(AItem.Value.TypeInfo);
     rttiType := rttiType.BaseType;

@@ -2,7 +2,9 @@ program InspDemo;
 
 uses
   Vcl.Forms,
-  uMain in 'uMain.pas' {Main};
+  uMain in 'uMain.pas' {Main},
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 

@@ -10,11 +10,11 @@ procedure Register;
 implementation
 
 resourcestring
-  SzControls = 'wxObjectInspector';
+  SwxControls = 'wxObjectInspector';
 
 procedure Register;
 begin
-  RegisterComponents(SzControls, [TwxObjectInspector]);
+  RegisterComponents(SwxControls, [TwxObjectInspector]);
 end;
 
 end.

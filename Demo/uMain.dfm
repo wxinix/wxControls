@@ -35,7 +35,7 @@ object Main: TMain
     DoubleBuffered = True
     FixedSplitter = False
     GridColor = clBlack
-    GutterColor = clSilver
+    GutterColor = clCream
     GutterEdgeColor = clOlive
     GutterWidth = 20
     HeaderPropText = 'Property'
@@ -50,7 +50,7 @@ object Main: TMain
     ShowGridLines = False
     ShowGutter = True
     ShowHeader = False
-    ShowItemHint = True
+    ShowItemHint = False
     SortByCategory = False
     SplitterColor = clGray
     SplitterPos = 100
