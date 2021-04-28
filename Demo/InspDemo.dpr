@@ -1,6 +1,7 @@
 program InspDemo;
 
 uses
+  FastMM5,
   Vcl.Forms,
   uMain in 'uMain.pas' {Main},
   Vcl.Themes,

@@ -14,6 +14,7 @@ object Main: TMain
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
@@ -43,7 +44,9 @@ object Main: TMain
     HighlightColor = clSkyBlue
     NameColor = clWindowText
     NonDefaultValueColor = clNavy
+    ObjectVisibility = mvPublished
     OnBeforeAddItem = zObjectInspector1BeforeAddItem
+    OnItemSetValue = zObjectInspector1ItemSetValue
     ReadOnly = False
     ReadOnlyColor = clGray
     ReferencesColor = clMaroon

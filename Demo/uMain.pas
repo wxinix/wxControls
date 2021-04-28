@@ -20,9 +20,94 @@ uses
   Vcl.Grids,
   Vcl.ValEdit,
   Vcl.Menus,
-  wxObjectInspector.Core;
+  wxObjectInspector.Core,
+  mORMOt,
+  SynCommons,
+  Rtti;
 
 type
+
+ /// <summary>
+  ///   Provides the "static" segment attributes that don't change during run time,
+  ///   such as coordinates, lengths, names, number of lanes.
+  /// </summary>
+  TSegmentAttributes = class(TSQLRecord)
+  strict private
+    {$REGION 'Fields'}
+    FSID: Integer;
+    FSLat: Double;
+    FSLon: Double;
+    FSName: RawUTF8;
+    FEID: Integer;
+    FELat: Double;
+    FELon: Double;
+    FEName: RawUTF8;
+    FWKT: RawUTF8;
+    FLength: Integer;
+    FNum_Lanes: Integer;
+    FTolling_Zone_ID: Integer;
+    {$ENDREGION}
+  published
+    /// <summary>
+    ///   ID of the start point.
+    /// </summary>
+    property SID: Integer read FSID write FSID;
+
+    /// <summary>
+    ///   Latitude of the start point.
+    /// </summary>
+    property SLat: Double read FSLat write FSLat;
+
+    /// <summary>
+    ///   Longitude of the start point.
+    /// </summary>
+    property SLon: Double read FSLon write FSLon;
+
+    /// <summary>
+    ///   Name of the start point.
+    /// </summary>
+    property SName: RawUTF8 read FSName write FSName;
+
+    /// <summary>
+    ///   ID of the end point.
+    /// </summary>
+    property EID: Integer read FEID write FEID;
+
+    /// <summary>
+    ///   Latitude of the end point.
+    /// </summary>
+    property ELat: Double read FELat write FELat;
+
+    /// <summary>
+    ///   Longitude of the end point.
+    /// </summary>
+    property ELon: Double read FELon write FELon;
+
+    /// <summary>
+    ///   Name of the end point.
+    /// </summary>
+    property EName: RawUTF8 read FEName write FEName;
+
+    /// <summary>
+    ///   WKT representation of the segment.
+    /// </summary>
+    property WKT: RawUTF8 read FWKT write FWKT;
+
+    /// <summary>
+    ///   Length of the segment in feet.
+    /// </summary>
+    property Length: Integer read FLength write FLength;
+
+    /// <summary>
+    ///   Number of lanes.
+    /// </summary>
+    property Num_Lanes: Integer read FNum_Lanes write FNum_Lanes;
+
+    /// <summary>
+    ///   ID of the tolling zone that this segment belongs to.
+    /// </summary>
+    property Tolling_Zone_ID: Integer read FTolling_Zone_ID write FTolling_Zone_ID;
+  end;
   TMain = class(TForm)
     zObjectInspector1: TwxObjectInspector;
     Panel1: TPanel;
@@ -47,6 +132,7 @@ type
     Label3: TLabel;
     PopupMenu1: TPopupMenu;
     PopupItemTest1: TMenuItem;
+    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ObjsComboChange(Sender: TObject);
     procedure CheckBox2Click(Sender: TObject);
@@ -54,11 +140,13 @@ type
     procedure BtnMultiComponentsClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     function zObjectInspector1BeforeAddItem(Sender: TControl; AItem: PwxPropertyItem): Boolean;
+    function zObjectInspector1ItemSetValue(Sender: TControl; AItem: PwxPropertyItem; var ANewValue: TValue): Boolean;
   private
+    FData: TObject;
     FIncludeEvent: Boolean;
     procedure GetObjsList;
     procedure EnumStyles;
-    { Private declarations }
+
   public
     { Public declarations }
   end;
@@ -68,8 +156,14 @@ var
 
 implementation
 
-uses TypInfo;
+uses
+  TypInfo;
 {$R *.dfm}
+
+procedure TMain.FormDestroy(Sender: TObject);
+begin
+  FData.Free;
+end;
 
 procedure TMain.BtnMultiComponentsClick(Sender: TObject);
 var
@@ -145,6 +239,8 @@ procedure TMain.FormCreate(Sender: TObject);
 begin
   GetObjsList;
   EnumStyles;
+  FData := TSegmentAttributes.Create;
+  zObjectInspector1.Component := FData;
 end;
 
 procedure TMain.FormResize(Sender: TObject);
@@ -157,6 +253,11 @@ begin
   Result := True;
   if not FIncludeEvent then
     Result := AItem.AssociatedProperty.PropertyType.TypeKind <> tkMethod;
+end;
+
+function TMain.zObjectInspector1ItemSetValue(Sender: TControl; AItem: PwxPropertyItem; var ANewValue: TValue): Boolean;
+begin
+  Result := not ANewValue.IsEmpty;
 end;
 
 end.
