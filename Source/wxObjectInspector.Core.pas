@@ -20,11 +20,10 @@ type
   ///   Providing format preference for floating point numbers.
   /// </summary>
   /// <remarks>
-  ///   This utility class is used in TwxPropertyItem.ValueAsString, which
-  ///   internally calls FloatToStrF to convert a floating point number Value
-  ///   into a displayable string, formatting via the <i>Format, Precision, and
-  ///   Digits</i> values. <br /><br />The Format parameter is TFloatFormat
-  ///   (SysUtils) type, with the following values:
+  ///   This utility class is used in wxPropertyItem.ValueAsString, which internally
+  ///   calls FloatToStrF to convert a floating point number Value into a displayable
+  ///   string, formatting via the <i>Format, Precision, and Digits</i> values. The
+  ///   Format parameter is TFloatFormat (SysUtils) type, with the following values:
   ///   <list type="bullet">
   ///     <item>
   ///       ffCurrency eg : ?2,345.60
@@ -42,7 +41,7 @@ type
   ///       ffNumber eg : 2,345.6
   ///     </item>
   ///   </list>
-  ///   TwxPropertyItem.ValueAsString internally calls FLoatToStrF(ffGeneral,
+  ///   TwxPropertyItem.ValueAsString internally calls FloatToStrF(ffGeneral,
   ///   TwxFloatPreference.ExpPrecision, TwxFloatPreference.MaxDigits).
   /// </remarks>
   /// <seealso cref="TwxPropertyItem.ValueAsString" />
@@ -1880,8 +1879,11 @@ begin
   end;
 
   value := ValueManager.StrToValue(FPropertyItem, str);
-  TwxCustomObjectInspector(FOwnerInspector).SetPropValue(FPropertyItem, value);
-  SelectAll;
+  if not value.IsEmpty then
+  begin
+    TwxCustomObjectInspector(FOwnerInspector).SetPropValue(FPropertyItem, value);
+    SelectAll;
+  end;
 end;
 
 procedure TwxObjectInspectorEdit.DoSetValueFromList;
@@ -2347,8 +2349,8 @@ end;
 
 constructor TwxFloatPreference.Create;
 const
-  defExpPrecision = 2;
-  defMaxDigits = 6;
+  defExpPrecision = 12;
+  defMaxDigits = 7;
 begin
   inherited;
   FExpPrecision := defExpPrecision;

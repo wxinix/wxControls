@@ -458,7 +458,7 @@ begin
     case AItem.AssociatedProperty.PropertyType.TypeKind of
       tkMethod:
         Exit(vtMethod);
-      tkString, tkWString, tkUString:
+      tkString, tkWString, tkUString, tkLString:
         Exit(vtString);
       tkWChar, tkChar:
         Exit(vtChar);
@@ -610,8 +610,10 @@ var
   uint64Val: UInt64;
 begin
   Result := TValue.Empty;
+  var valueType := GetValueType(AItem);
+  var valueTypeStr := TRttiEnumerationType.GetName(valueType).Substring(2);
 
-  case GetValueType(AItem) of
+  case valueType of
     vtString:
       begin
         Result := AString;
@@ -637,17 +639,25 @@ begin
           Result := extendedVal;
       end;
   else
-    if AItem.AssociatedProperty.PropertyType.IsOrdinal then begin
+    if AItem.AssociatedProperty.PropertyType.IsOrdinal then
+    begin
+      valueTypeStr := 'Integer';
       if IsSignedValue(AItem.Value) then begin
         Val(AString, int64Val, errCode);
         if errCode = 0 then
           Result := int64Val;
-      end else begin
+      end else
+      begin
         Val(AString, uint64Val, errCode);
         if errCode = 0 then
           Result := uint64Val;
       end;
     end;
+  end;
+
+  if Result.IsEmpty then
+  begin
+    ShowMessage(Format('"%s" is not a valid %s value.', [AString, valueTypeStr]));
   end;
 end;
 
