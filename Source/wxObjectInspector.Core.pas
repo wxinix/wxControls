@@ -688,29 +688,29 @@ type
   TObjectInspectorHeaderPart = (hpLeft, hpRight);
 
 type
-  TzHeaderMouseDownEvent = procedure(
+  TwxHeaderMouseDownEvent = procedure(
     Sender: TControl;
     APart: TObjectInspectorHeaderPart;
     X, Y: Integer
   ) of object;
 
-  TzPropertyItemEvent = function(
+  TwxPropertyItemEvent = function(
     Sender: TControl;
     AItem: PwxPropertyItem
   ): Boolean of object;
 
-  TzPropertyItemGetFriendlyNameEvent = function(
+  TwxPropertyItemGetFriendlyNameEvent = function(
     Sender: TControl;
     AItem: PwxPropertyItem
   ): string of object;
 
-  TzPropertyItemSetValueEvent = function(
+  TwxPropertyItemSetValueEvent = function(
     Sender: TControl;
     AItem: PwxPropertyItem;
     var ANewValue: TValue
   ): Boolean of object;
 
-  TzSplitterPosChangedEvent = procedure(
+  TwxSplitterPosChangedEvent = procedure(
     Sender: TControl;
     var APos: Integer
   ) of object;
@@ -756,8 +756,8 @@ type
     FItems: TwxPropertyItemList;
     FLockUpdate: Boolean;
     FObjectVisibility: TMemberVisibility;
-    FOnAutoExpandItemOnInit: TzPropertyItemEvent;
-    FOnBeforeAddItem: TzPropertyItemEvent;
+    FOnAutoExpandItemOnInit: TwxPropertyItemEvent;
+    FOnBeforeAddItem: TwxPropertyItemEvent;
     FPropertyCategoryMap: TDictionary<string, Integer>;
     FPropertyInstances: TDictionary<string, TObject>;
     FReadOnly: Boolean;
@@ -820,14 +820,14 @@ type
     property ReadOnly: Boolean read FReadOnly write FReadOnly;
     property SortByCategory: Boolean read FSortByCategory write Set_SortByCategory;
 
-    property OnAutoExpandItemOnInit: TzPropertyItemEvent read FOnAutoExpandItemOnInit write FOnAutoExpandItemOnInit;
-    property OnBeforeAddItem: TzPropertyItemEvent read FOnBeforeAddItem write FOnBeforeAddItem;
+    property OnAutoExpandItemOnInit: TwxPropertyItemEvent read FOnAutoExpandItemOnInit write FOnAutoExpandItemOnInit;
+    property OnBeforeAddItem: TwxPropertyItemEvent read FOnBeforeAddItem write FOnBeforeAddItem;
   end;
 
   TwxSplitteredObjectInspector = class abstract(TwxAbstractObjectInspector)
   strict private
     FFixedSplitter: Boolean;
-    FOnSplitterPosChanged: TzSplitterPosChangedEvent;
+    FOnSplitterPosChanged: TwxSplitterPosChangedEvent;
     FSplitterColor: TColor;
     FSplitterDown: Boolean;
     FSplitterPos: Integer;
@@ -853,7 +853,7 @@ type
     property SplitterColor: TColor read FSplitterColor write Set_SplitterColor;
     property SplitterPos: Integer read FSplitterPos write Set_SplitterPos;
     property SplitterRect: TRect read Get_SplitterRect;
-    property OnSplitterPosChanged: TzSplitterPosChangedEvent read FOnSplitterPosChanged write FOnSplitterPosChanged;
+    property OnSplitterPosChanged: TwxSplitterPosChangedEvent read FOnSplitterPosChanged write FOnSplitterPosChanged;
   end;
 
   TwxHeaderedObjectInspector = class abstract(TwxSplitteredObjectInspector)
@@ -863,7 +863,7 @@ type
     FHeaderPropText: string;
     FHeaderValuePressed: Boolean;
     FHeaderValueText: string;
-    FOnHeaderMouseDown: TzHeaderMouseDownEvent;
+    FOnHeaderMouseDown: TwxHeaderMouseDownEvent;
     FShowHeader: Boolean;
     {$REGION 'Property gettors and settors'}
     function Get_HeaderPropRect: TRect;
@@ -888,7 +888,7 @@ type
     property HeaderValueRect: TRect read Get_HeaderValueRect;
     property HeaderValueText: string read FHeaderValueText write Set_HeaderValueText;
     property ShowHeader: Boolean read FShowHeader write Set_ShowHeader;
-    property OnHeaderMouseDown: TzHeaderMouseDownEvent read FOnHeaderMouseDown write FOnHeaderMouseDown;
+    property OnHeaderMouseDown: TwxHeaderMouseDownEvent read FOnHeaderMouseDown write FOnHeaderMouseDown;
   end;
 
   TwxScrollableObjectInspector = class abstract(TwxHeaderedObjectInspector)
@@ -1156,12 +1156,12 @@ type
     FIsItemHint: Boolean;
     FNameColor: TColor;
     FNonDefaultValueColor: TColor;
-    FOnCollapseItem: TzPropertyItemEvent;
-    FOnExpandItem: TzPropertyItemEvent;
-    FOnGetItemFriendlyName: TzPropertyItemGetFriendlyNameEvent;
-    FOnGetItemReadOnly: TzPropertyItemEvent;
-    FOnItemSetValue: TzPropertyItemSetValueEvent;
-    FOnSelectItem: TzPropertyItemEvent;
+    FOnCollapseItem: TwxPropertyItemEvent;
+    FOnExpandItem: TwxPropertyItemEvent;
+    FOnGetItemFriendlyName: TwxPropertyItemGetFriendlyNameEvent;
+    FOnGetItemReadOnly: TwxPropertyItemEvent;
+    FOnItemSetValue: TwxPropertyItemSetValueEvent;
+    FOnSelectItem: TwxPropertyItemEvent;
     FPrevHintIndex: Integer;
     FPropInspEdit: TwxObjectInspectorEdit;
     FPropsNeedHint: Boolean;
@@ -1288,12 +1288,12 @@ type
     property ValueColor: TColor read FValueColor write Set_ValueColor;
     property ValueRect[AIndex: Integer]: TRect read Get_ValueRect;
     property ValueTextRect[AIndex: Integer]: TRect read Get_ValueTextRect;
-    property OnCollapseItem: TzPropertyItemEvent read FOnCollapseItem write FOnCollapseItem;
-    property OnExpandItem: TzPropertyItemEvent read FOnExpandItem write FOnExpandItem;
-    property OnGetItemFriendlyName: TzPropertyItemGetFriendlyNameEvent read FOnGetItemFriendlyName write FOnGetItemFriendlyName;
-    property OnGetItemReadOnly: TzPropertyItemEvent read FOnGetItemReadOnly write FOnGetItemReadOnly;
-    property OnItemSetValue: TzPropertyItemSetValueEvent read FOnItemSetValue write FOnItemSetValue;
-    property OnSelectItem: TzPropertyItemEvent read FOnSelectItem write FOnSelectItem;
+    property OnCollapseItem: TwxPropertyItemEvent read FOnCollapseItem write FOnCollapseItem;
+    property OnExpandItem: TwxPropertyItemEvent read FOnExpandItem write FOnExpandItem;
+    property OnGetItemFriendlyName: TwxPropertyItemGetFriendlyNameEvent read FOnGetItemFriendlyName write FOnGetItemFriendlyName;
+    property OnGetItemReadOnly: TwxPropertyItemEvent read FOnGetItemReadOnly write FOnGetItemReadOnly;
+    property OnItemSetValue: TwxPropertyItemSetValueEvent read FOnItemSetValue write FOnItemSetValue;
+    property OnSelectItem: TwxPropertyItemEvent read FOnSelectItem write FOnSelectItem;
   end;
 
   [ComponentPlatformsAttribute(pidWin32 or pidWin64 or pidOSX32)]
